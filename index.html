@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة مزرعة تسمين العجول</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+        }
+
+        :root {
+            --primary: #2d6a4f;
+            --secondary: #40916c;
+            --accent: #ffb703;
+            --light: #f8f9fa;
+            --dark: #1b4332;
+            --gray: #6c757d;
+            --danger: #e63946;
+            --success: #52b788;
+        }
+
+        body {
+            background-color: #f1f7f4;
+            color: #333;
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 24px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px 10px;
+            font-weight: 600;
+            color: var(--gray);
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            background-color: rgba(45, 106, 79, 0.05);
+        }
+
+        .tab i {
+            margin-left: 8px;
+            font-size: 18px;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Dashboard Stats */
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .stat-card i {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .stat-card .number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .stat-card .label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+
+        /* Section Title */
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 25px 0 15px;
+        }
+
+        .section-title h2 {
+            font-size: 1.3rem;
+            color: var(--dark);
+        }
+
+        .add-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 8px rgba(45, 106, 79, 0.3);
+            cursor: pointer;
+        }
+
+        /* Animal List */
+        .animal-list {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .animal-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        .animal-item:last-child {
+            border-bottom: none;
+        }
+
+        .animal-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a8dadc, #457b9d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            color: white;
+            font-size: 22px;
+        }
+
+        .animal-details {
+            flex: 1;
+        }
+
+        .animal-details h3 {
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .animal-details p {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .animal-weight {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        /* Weight Tracking */
+        .weight-tracking {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .weight-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .weight-title {
+            font-size: 1.2rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .weight-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .weight-table th {
+            background-color: #f8f9fa;
+            padding: 12px 10px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--dark);
+            border-bottom: 2px solid #eee;
+        }
+
+        .weight-table td {
+            padding: 12px 10px;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+        }
+
+        .weight-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .weight-change {
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .positive {
+            background-color: rgba(82, 183, 136, 0.2);
+            color: var(--success);
+        }
+
+        .negative {
+            background-color: rgba(230, 57, 70, 0.2);
+            color: var(--danger);
+        }
+
+        /* Charts */
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            color: var(--dark);
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .chart {
+            height: 250px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding-top: 20px;
+        }
+
+        .chart-bar {
+            width: 40px;
+            background: linear-gradient(to top, var(--primary), var(--secondary));
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .chart-bar-label {
+            position: absolute;
+            top: -25px;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .chart-bar-value {
+            position: absolute;
+            bottom: -25px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 450px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            color: var(--dark);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray);
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            direction: rtl;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary);
+        }
+
+        .btn-secondary {
+            background-color: var(--gray);
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .alert-success {
+            background-color: rgba(82, 183, 136, 0.2);
+            color: var(--success);
+            border-right: 4px solid var(--success);
+        }
+
+        .alert-warning {
+            background-color: rgba(255, 183, 3, 0.2);
+            color: #856404;
+            border-right: 4px solid var(--accent);
+        }
+
+        .alert i {
+            margin-left: 10px;
+            font-size: 18px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 750px;
+                margin: 0 auto;
+            }
+            
+            .stats-overview {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-cow"></i>
+                    <h1>إدارة مزرعة تسمين العجول</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <div class="tab active" data-tab="dashboard">
+                <i class="fas fa-home"></i> الرئيسية
+            </div>
+            <div class="tab" data-tab="calves">
+                <i class="fas fa-cow"></i> العجول
+            </div>
+            <div class="tab" data-tab="weights">
+                <i class="fas fa-weight-scale"></i> متابعة الأوزان
+            </div>
+            <div class="tab" data-tab="reports">
+                <i class="fas fa-chart-line"></i> التقارير
+            </div>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <i class="fas fa-cow"></i>
+                    <div class="number">24</div>
+                    <div class="label">عدد العجول</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-weight-scale"></i>
+                    <div class="number">185<span style="font-size: 1rem;">كجم</span></div>
+                    <div class="label">متوسط الوزن</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-arrow-up"></i>
+                    <div class="number">+28<span style="font-size: 1rem;">كجم</span></div>
+                    <div class="label">متوسط زيادة الشهر</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-calendar"></i>
+                    <div class="number">15</div>
+                    <div class="label">أيام للموسم القادم</div>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <h2>العجول المطلوب متابعتها</h2>
+            </div>
+            
+            <div id="dashboardCalves" class="animal-list">
+                <!-- Will be filled by JavaScript -->
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">تطور متوسط الوزن (آخر 6 أشهر)</div>
+                <div class="chart" id="dashboardChart">
+                    <!-- Chart will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Calves Tab -->
+        <div id="calves" class="tab-content">
+            <div class="section-title">
+                <h2>قائمة العجول</h2>
+                <button class="add-btn" id="addCalfBtn">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+
+            <div class="alert alert-warning">
+                <i class="fas fa-info-circle"></i>
+                <span>اضغط على أي عجل لعرض تفاصيله وإدخال وزنه الشهري</span>
+            </div>
+
+            <div id="calvesList" class="animal-list">
+                <!-- Calves will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Weights Tab -->
+        <div id="weights" class="tab-content">
+            <div class="section-title">
+                <h2>متابعة الأوزان الشهرية</h2>
+                <button class="add-btn" id="addWeightBtn">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+
+            <div id="weightsList">
+                <!-- Weight records will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Reports Tab -->
+        <div id="reports" class="tab-content">
+            <div class="section-title">
+                <h2>تقارير الأداء</h2>
+            </div>
+
+            <div class="weight-tracking">
+                <div class="weight-header">
+                    <div class="weight-title">أفضل العجول زيادة في الوزن</div>
+                </div>
+                <table class="weight-table">
+                    <thead>
+                        <tr>
+                            <th>رقم العجل</th>
+                            <th>الوزن الحالي</th>
+                            <th>الوزن الأول</th>
+                            <th>الزيادة الشهرية</th>
+                            <th>معدل النمو</th>
+                        </tr>
+                    </thead>
+                    <tbody id="topCalvesTable">
+                        <!-- Will be filled by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">توزيع العجول حسب الوزن الحالي</div>
+                <div class="chart" id="weightDistributionChart">
+                    <!-- Chart will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Calf Modal -->
+    <div id="addCalfModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">إضافة عجل جديد</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="calfForm">
+                <div class="form-group">
+                    <label for="calfNumber">رقم العجل *</label>
+                    <input type="text" id="calfNumber" class="form-control" placeholder="مثال: ع-١٢٣" required>
+                </div>
+                <div class="form-group">
+                    <label for="breedType">نوع السلالة</label>
+                    <select id="breedType" class="form-control">
+                        <option value="بلدي">بلدي</option>
+                        <option value="هجين">هجين</option>
+                        <option value="أجنبي">أجنبي</option>
+                        <option value="فريزيان">فريزيان</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="entryDate">تاريخ الدخول *</label>
+                    <input type="date" id="entryDate" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="entryWeight">الوزن عند الدخول (كجم) *</label>
+                    <input type="number" id="entryWeight" class="form-control" step="0.1" placeholder="مثال: ١٢٠.٥" required>
+                </div>
+                <div class="form-group">
+                    <label for="targetWeight">الوزن المستهدف (كجم)</label>
+                    <input type="number" id="targetWeight" class="form-control" step="0.1" placeholder="مثال: ٣٥٠">
+                </div>
+                <div class="form-group">
+                    <label for="notes">ملاحظات</label>
+                    <textarea id="notes" class="form-control" rows="3" placeholder="ملاحظات إضافية"></textarea>
+                </div>
+                <button type="submit" class="btn">إضافة العجل</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Weight Modal -->
+    <div id="addWeightModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">تسجيل وزن شهري</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="weightForm">
+                <div class="form-group">
+                    <label for="selectCalf">اختر العجل *</label>
+                    <select id="selectCalf" class="form-control" required>
+                        <option value="">-- اختر العجل --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="weightDate">تاريخ الوزن *</label>
+                    <input type="date" id="weightDate" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="currentWeight">الوزن الحالي (كجم) *</label>
+                    <input type="number" id="currentWeight" class="form-control" step="0.1" placeholder="مثال: ١٨٥.٥" required>
+                </div>
+                <div class="form-group">
+                    <label for="feedType">نوع العلف المستخدم</label>
+                    <select id="feedType" class="form-control">
+                        <option value="علف مركز">علف مركز</option>
+                        <option value="علف أخضر">علف أخضر</option>
+                        <option value="مخلوط">مخلوط</option>
+                        <option value="تبن">تبن</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="healthStatus">الحالة الصحية</label>
+                    <select id="healthStatus" class="form-control">
+                        <option value="ممتاز">ممتاز</option>
+                        <option value="جيد">جيد</option>
+                        <option value="متوسط">متوسط</option>
+                        <option value="يحتاج رعاية">يحتاج رعاية</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">تسجيل الوزن</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Calf Details Modal -->
+    <div id="calfDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="calfDetailsTitle">تفاصيل العجل</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div id="calfDetailsContent">
+                <!-- Will be filled by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="#" class="nav-item active" data-tab="dashboard">
+            <i class="fas fa-home"></i>
+            <span>الرئيسية</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="calves">
+            <i class="fas fa-cow"></i>
+            <span>العجول</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="weights">
+            <i class="fas fa-weight-scale"></i>
+            <span>الأوزان</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="reports">
+            <i class="fas fa-chart-bar"></i>
+            <span>التقارير</span>
+        </a>
+    </div>
+
+    <script>
+        // البيانات المخزنة في المتصفح
+        let calves = JSON.parse(localStorage.getItem('calves')) || [];
+        let weights = JSON.parse(localStorage.getItem('weights')) || [];
+        
+        // تهيئة بيانات تجريبية إذا كانت المخازن فارغة
+        if (calves.length === 0) {
+            calves = [
+                { id: 1, number: "ع-١٠١", breed: "هجين", entryDate: "2023-10-01", entryWeight: 120, targetWeight: 350, notes: "صحة جيدة" },
+                { id: 2, number: "ع-١٠٢", breed: "بلدي", entryDate: "2023-10-05", entryWeight: 110, targetWeight: 300, notes: "يحتاج متابعة" },
+                { id: 3, number: "ع-١٠٣", breed: "فريزيان", entryDate: "2023-10-10", entryWeight: 150, targetWeight: 400, notes: "" },
+                { id: 4, number: "ع-١٠٤", breed: "أجنبي", entryDate: "2023-10-15", entryWeight: 130, targetWeight: 380, notes: "ممتاز" }
+            ];
+            localStorage.setItem('calves', JSON.stringify(calves));
+        }
+        
+        if (weights.length === 0) {
+            weights = [
+                { id: 1, calfId: 1, date: "2023-10-01", weight: 120, feedType: "علف مركز", health: "ممتاز" },
+                { id: 2, calfId: 1, date: "2023-11-01", weight: 150, feedType: "علف مركز", health: "ممتاز" },
+                { id: 3, calfId: 1, date: "2023-12-01", weight: 185, feedType: "مخلوط", health: "جيد" },
+                { id: 4, calfId: 2, date: "2023-10-05", weight: 110, feedType: "علف أخضر", health: "متوسط" },
+                { id: 5, calfId: 2, date: "2023-11-05", weight: 135, feedType: "علف مركز", health: "جيد" },
+                { id: 6, calfId: 2, date: "2023-12-05", weight: 160, feedType: "مخلوط", health: "ممتاز" },
+                { id: 7, calfId: 3, date: "2023-10-10", weight: 150, feedType: "علف مركز", health: "ممتاز" },
+                { id: 8, calfId: 3, date: "2023-11-10", weight: 190, feedType: "مخلوط", health: "ممتاز" },
+                { id: 9, calfId: 3, date: "2023-12-10", weight: 230, feedType: "علف مركز", health: "ممتاز" }
+            ];
+            localStorage.setItem('weights', JSON.stringify(weights));
+        }
+
+        // وظائف التبويب
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.tab, .nav-item');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    // تحديث التبويب النشط
+                    tabs.forEach(t => {
+                        t.classList.remove('active');
+                        if (t.classList.contains('nav-item')) {
+                            t.classList.remove('active');
+                        }
+                    });
+                    tab.classList.add('active');
+                    
+                    // إظهار المحتوى المناسب
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === tabId) {
+                            content.classList.add('active');
+                        }
+                    });
+                    
+                    // تحديث المحتوى حسب التبويب
+                    if (tabId === 'calves') {
+                        loadCalvesList();
+                    } else if (tabId === 'weights') {
+                        loadWeightsList();
+                    } else if (tabId === 'reports') {
+                        loadReports();
+                    } else if (tabId === 'dashboard') {
+                        loadDashboard();
+                    }
+                });
+            });
+        }
+
+        // تحميل قائمة العجول
+        function loadCalvesList() {
+            const calvesList = document.getElementById('calvesList');
+            calvesList.innerHTML = '';
+            
+            calves.forEach(calf => {
+                const lastWeight = getLastWeight(calf.id);
+                const calfElement = document.createElement('div');
+                calfElement.className = 'animal-item';
+                calfElement.setAttribute('data-id', calf.id);
+                calfElement.innerHTML = `
+                    <div class="animal-icon" style="background: linear-gradient(135deg, #a8dadc, #457b9d);">
+                        <i class="fas fa-cow"></i>
+                    </div>
+                    <div class="animal-details">
+                        <h3>رقم: ${calf.number}</h3>
+                        <p>السلالة: ${calf.breed} | تاريخ الدخول: ${formatDate(calf.entryDate)}</p>
+                        <p class="animal-weight">الوزن الحالي: ${lastWeight ? lastWeight.weight + ' كجم' : 'لم يسجل'}</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-chevron-left" style="color: var(--gray);"></i>
+                    </div>
+                `;
+                
+                calfElement.addEventListener('click', () => showCalfDetails(calf.id));
+                calvesList.appendChild(calfElement);
+            });
+        }
+
+        // تحميل قائمة الأوزان
+        function loadWeightsList() {
+            const weightsList = document.getElementById('weightsList');
+            weightsList.innerHTML = '';
+            
+            // تجميع الأوزان حسب العجل
+            const groupedWeights = {};
+            weights.forEach(weight => {
+                if (!groupedWeights[weight.calfId]) {
+                    groupedWeights[weight.calfId] = [];
+                }
+                groupedWeights[weight.calfId].push(weight);
+            });
+            
+            // عرض الأوزان لكل عجل
+            Object.keys(groupedWeights).forEach(calfId => {
+                const calf = calves.find(c => c.id == calfId);
+                if (!calf) return;
+                
+                const weightCard = document.createElement('div');
+                weightCard.className = 'weight-tracking';
+                weightCard.innerHTML = `
+                    <div class="weight-header">
+                        <div class="weight-title">${calf.number} - ${calf.breed}</div>
+                    </div>
+                    <table class="weight-table">
+                        <thead>
+                            <tr>
+                                <th>التاريخ</th>
+                                <th>الوزن (كجم)</th>
+                                <th>الزيادة</th>
+                                <th>نوع العلف</th>
+                                <th>الحالة الصحية</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${groupedWeights[calfId].sort((a, b) => new Date(b.date) - new Date(a.date)).map((weight, index, arr) => {
+                                const prevWeight = index < arr.length - 1 ? arr[index + 1].weight : weight.weight;
+                                const change = weight.weight - prevWeight;
+                                const changeClass = change >= 0 ? 'positive' : 'negative';
+                                const changeText = change >= 0 ? `+${change.toFixed(1)}` : change.toFixed(1);
+                                
+                                return `
+                                    <tr>
+                                        <td>${formatDate(weight.date)}</td>
+                                        <td><strong>${weight.weight.toFixed(1)}</strong></td>
+                                        <td><span class="weight-change ${changeClass}">${changeText}</span></td>
+                                        <td>${weight.feedType}</td>
+                                        <td>${weight.health}</td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                `;
+                
+                weightsList.appendChild(weightCard);
+            });
+        }
+
+        // تحميل لوحة التحكم
+        function loadDashboard() {
+            // تحديث الإحصائيات
+            document.querySelector('.stat-card .number:nth-child(2)').textContent = calves.length;
+            
+            // حساب متوسط الوزن
+            const avgWeight = calculateAverageWeight();
+            document.querySelector('.stat-card .number:nth-child(3)').innerHTML = `${avgWeight.toFixed(1)}<span style="font-size: 1rem;">كجم</span>`;
+            
+            // حساب متوسط الزيادة الشهرية
+            const avgMonthlyGain = calculateAverageMonthlyGain();
+            document.querySelector('.stat-card .number:nth-child(5)').innerHTML = `+${avgMonthlyGain.toFixed(1)}<span style="font-size: 1rem;">كجم</span>`;
+            
+            // عرض العجول المطلوب متابعتها
+            loadDashboardCalves();
+            
+            // إنشاء الرسم البياني
+            createDashboardChart();
+        }
+
+        // تحميل التقارير
+        function loadReports() {
+            // أفضل العجول زيادة في الوزن
+            const topCalvesTable = document.getElementById('topCalvesTable');
+            topCalvesTable.innerHTML = '';
+            
+            const topCalves = calves.map(calf => {
+                const lastWeight = getLastWeight(calf.id);
+                const firstWeight = getFirstWeight(calf.id);
+                const monthlyGain = lastWeight && firstWeight ? 
+                    (lastWeight.weight - firstWeight.weight) / getMonthsBetween(firstWeight.date, lastWeight.date) : 0;
+                
+                return {
+                    ...calf,
+                    lastWeight: lastWeight ? lastWeight.weight : 0,
+                    firstWeight: firstWeight ? firstWeight.weight : 0,
+                    monthlyGain: monthlyGain,
+                    totalGain: lastWeight && firstWeight ? lastWeight.weight - firstWeight.weight : 0
+                };
+            })
+            .filter(calf => calf.monthlyGain > 0)
+            .sort((a, b) => b.monthlyGain - a.monthlyGain)
+            .slice(0, 5);
+            
+            topCalves.forEach(calf => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${calf.number}</strong></td>
+                    <td>${calf.lastWeight.toFixed(1)} كجم</td>
+                    <td>${calf.firstWeight.toFixed(1)} كجم</td>
+                    <td><span class="weight-change positive">+${calf.monthlyGain.toFixed(1)}</span></td>
+                    <td>${((calf.monthlyGain / calf.firstWeight) * 100).toFixed(1)}%</td>
+                `;
+                topCalvesTable.appendChild(row);
+            });
+            
+            // إنشاء رسم توزيع الأوزان
+            createWeightDistributionChart();
+        }
+
+        // عرض تفاصيل العجل
+        function showCalfDetails(calfId) {
+            const calf = calves.find(c => c.id == calfId);
+            if (!calf) return;
+            
+            const calfWeights = weights.filter(w => w.calfId == calfId)
+                .sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            const lastWeight = getLastWeight(calfId);
+            const firstWeight = getFirstWeight(calfId);
+            const monthlyGain = lastWeight && firstWeight ? 
+                (lastWeight.weight - firstWeight.weight) / getMonthsBetween(firstWeight.date, lastWeight.date) : 0;
+            
+            document.getElementById('calfDetailsTitle').textContent = `تفاصيل العجل: ${calf.number}`;
+            
+            let weightHistory = '<p>لا توجد سجلات وزن</p>';
+            if (calfWeights.length > 0) {
+                weightHistory = `
+                    <table class="weight-table" style="margin-top: 15px;">
+                        <thead>
+                            <tr>
+                                <th>التاريخ</th>
+                                <th>الوزن</th>
+                                <th>الزيادة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${calfWeights.map((weight, index) => {
+                                const prevWeight = index > 0 ? calfWeights[index - 1].weight : weight.weight;
+                                const change = weight.weight - prevWeight;
+                                const changeClass = change >= 0 ? 'positive' : 'negative';
+                                const changeText = index === 0 ? '-' : (change >= 0 ? `+${change.toFixed(1)}` : change.toFixed(1));
+                                
+                                return `
+                                    <tr>
+                                        <td>${formatDate(weight.date)}</td>
+                                        <td><strong>${weight.weight.toFixed(1)} كجم</strong></td>
+                                        <td><span class="weight-change ${index === 0 ? '' : changeClass}">${changeText}</span></td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                `;
+            }
+            
+            document.getElementById('calfDetailsContent').innerHTML = `
+                <div class="form-group">
+                    <label>رقم العجل:</label>
+                    <p><strong>${calf.number}</strong></p>
+                </div>
+                <div class="form-group">
+                    <label>نوع السلالة:</label>
+                    <p>${calf.breed}</p>
+                </div>
+                <div class="form-group">
+                    <label>تاريخ الدخول:</label>
+                    <p>${formatDate(calf.entryDate)}</p>
+                </div>
+                <div class="form-group">
+                    <label>الوزن عند الدخول:</label>
+                    <p>${calf.entryWeight.toFixed(1)} كجم</p>
+                </div>
+                <div class="form-group">
+                    <label>الوزن الحالي:</label>
+                    <p>${lastWeight ? lastWeight.weight.toFixed(1) + ' كجم' : 'غير معروف'}</p>
+                </div>
+                <div class="form-group">
+                    <label>متوسط الزيادة الشهرية:</label>
+                    <p>${monthlyGain > 0 ? '+' + monthlyGain.toFixed(1) + ' كجم' : 'غير متاح'}</p>
+                </div>
+                ${calf.notes ? `<div class="form-group">
+                    <label>ملاحظات:</label>
+                    <p>${calf.notes}</p>
+                </div>` : ''}
+                
+                <div class="section-title" style="margin-top: 20px;">
+                    <h3>سجل الأوزان</h3>
+                    <button class="add-btn" onclick="addWeightForCalf(${calfId})" style="width: 40px; height: 40px; font-size: 18px;">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                ${weightHistory}
+                
+                <button class="btn" onclick="addWeightForCalf(${calfId})" style="margin-top: 20px;">
+                    <i class="fas fa-weight-scale"></i> إدخال وزن جديد
+                </button>
+            `;
+            
+            document.getElementById('calfDetailsModal').style.display = 'flex';
+        }
+
+        // إضافة وزن لعجل محدد
+        function addWeightForCalf(calfId) {
+            const calf = calves.find(c => c.id == calfId);
+            if (calf) {
+                document.getElementById('selectCalf').value = calfId;
+                document.getElementById('addWeightModal').style.display = 'flex';
+                document.getElementById('calfDetailsModal').style.display = 'none';
+            }
+        }
+
+        // تحميل العجول في لوحة التحكم
+        function loadDashboardCalves() {
+            const dashboardCalves = document.getElementById('dashboardCalves');
+            dashboardCalves.innerHTML = '';
+            
+            // الحصول على العجول التي تحتاج متابعة (آخر وزن منذ أكثر من 30 يوم)
+            const calvesToMonitor = calves.filter(calf => {
+                const lastWeight = getLastWeight(calf.id);
+                if (!lastWeight) return true;
+                
+                const daysSinceLastWeight = Math.floor((new Date() - new Date(lastWeight.date)) / (1000 * 60 * 60 * 24));
+                return daysSinceLastWeight > 30;
+            }).slice(0, 3);
+            
+            if (calvesToMonitor.length === 0) {
+                dashboardCalves.innerHTML = `
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle"></i>
+                        <span>جميع العجول محدثة! لا توجد عجول تحتاج متابعة.</span>
+                    </div>
+                `;
+                return;
+            }
+            
+            calvesToMonitor.forEach(calf => {
+                const lastWeight = getLastWeight(calf.id);
+                const daysSinceLastWeight = lastWeight ? 
+                    Math.floor((new Date() - new Date(lastWeight.date)) / (1000 * 60 * 60 * 24)) : 'أكثر من 30';
+                
+                const calfElement = document.createElement('div');
+                calfElement.className = 'animal-item';
+                calfElement.setAttribute('data-id', calf.id);
+                calfElement.innerHTML = `
+                    <div class="animal-icon" style="background: linear-gradient(135deg, #ffb703, #fb8500);">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="animal-details">
+                        <h3>${calf.number}</h3>
+                        <p>آخر وزن: ${lastWeight ? formatDate(lastWeight.date) : 'لم يسجل'}</p>
+                        <p class="animal-weight">${lastWeight ? lastWeight.weight + ' كجم' : 'يحتاج وزن أولي'} | ${daysSinceLastWeight} يوم منذ آخر وزن</p>
+                    </div>
+                `;
+                
+                calfElement.addEventListener('click', () => showCalfDetails(calf.id));
+                dashboardCalves.appendChild(calfElement);
+            });
+        }
+
+        // إنشاء رسم بياني للوحة التحكم
+        function createDashboardChart() {
+            const chartContainer = document.getElementById('dashboardChart');
+            chartContainer.innerHTML = '';
+            
+            // تجميع متوسط الأوزان الشهرية لآخر 6 أشهر
+            const monthlyAverages = [];
+            const months = [];
+            
+            for (let i = 5; i >= 0; i--) {
+                const date = new Date();
+                date.setMonth(date.getMonth() - i);
+                const monthYear = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+                months.push(getMonthName(date.getMonth() + 1));
+                
+                // حساب متوسط الوزن لهذا الشهر
+                const monthWeights = weights.filter(w => {
+                    const weightDate = new Date(w.date);
+                    const weightMonthYear = `${weightDate.getFullYear()}-${(weightDate.getMonth() + 1).toString().padStart(2, '0')}`;
+                    return weightMonthYear === monthYear;
+                });
+                
+                const avg = monthWeights.length > 0 ? 
+                    monthWeights.reduce((sum, w) => sum + w.weight, 0) / monthWeights.length : 0;
+                
+                monthlyAverages.push(avg);
+            }
+            
+            // إيجاد القيمة الأعلى للرسم البياني
+            const maxValue = Math.max(...monthlyAverages.filter(v => v > 0), 200);
+            
+            // إنشاء الأعمدة
+            months.forEach((month, index) => {
+                if (monthlyAverages[index] > 0) {
+                    const height = (monthlyAverages[index] / maxValue) * 180;
+                    const bar = document.createElement('div');
+                    bar.className = 'chart-bar';
+                    bar.style.height = `${height}px`;
+                    bar.innerHTML = `
+                        <div class="chart-bar-label">${month}</div>
+                        <div class="chart-bar-value">${monthlyAverages[index].toFixed(0)}</div>
+                    `;
+                    chartContainer.appendChild(bar);
+                }
+            });
+        }
+
+        // إنشاء رسم توزيع الأوزان
+        function createWeightDistributionChart() {
+            const chartContainer = document.getElementById('weightDistributionChart');
+            chartContainer.innerHTML = '';
+            
+            // توزيع العجول حسب فئات الوزن
+            const weightRanges = [
+                { label: 'أقل من 150', min: 0, max: 150 },
+                { label: '150-200', min: 150, max: 200 },
+                { label: '200-250', min: 200, max: 250 },
+                { label: '250-300', min: 250, max: 300 },
+                { label: 'أكثر من 300', min: 300, max: 999 }
+            ];
+            
+            const counts = weightRanges.map(range => {
+                return calves.filter(calf => {
+                    const lastWeight = getLastWeight(calf.id);
+                    return lastWeight && lastWeight.weight >= range.min && lastWeight.weight < range.max;
+                }).length;
+            });
+            
+            const maxCount = Math.max(...counts, 1);
+            
+            // إنشاء الأعمدة
+            weightRanges.forEach((range, index) => {
+                const height = (counts[index] / maxCount) * 180;
+                const bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                bar.style.height = `${height}px`;
+                bar.innerHTML = `
+                    <div class="chart-bar-label">${range.label}</div>
+                    <div class="chart-bar-value">${counts[index]}</div>
+                `;
+                chartContainer.appendChild(bar);
+            });
+        }
+
+        // وظائف مساعدة
+        function getLastWeight(calfId) {
+            const calfWeights = weights.filter(w => w.calfId == calfId);
+            if (calfWeights.length === 0) return null;
+            return calfWeights.sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+        }
+
+        function getFirstWeight(calfId) {
+            const calfWeights = weights.filter(w => w.calfId == calfId);
+            if (calfWeights.length === 0) return null;
+            return calfWeights.sort((a, b) => new Date(a.date) - new Date(b.date))[0];
+        }
+
+        function calculateAverageWeight() {
+            const lastWeights = calves.map(calf => getLastWeight(calf.id)).filter(w => w !== null);
+            if (lastWeights.length === 0) return 0;
+            return lastWeights.reduce((sum, w) => sum + w.weight, 0) / lastWeights.length;
+        }
+
+        function calculateAverageMonthlyGain() {
+            let totalGain = 0;
+            let totalMonths = 0;
+            
+            calves.forEach(calf => {
+                const firstWeight = getFirstWeight(calf.id);
+                const lastWeight = getLastWeight(calf.id);
+                
+                if (firstWeight && lastWeight && firstWeight !== lastWeight) {
+                    const months = getMonthsBetween(firstWeight.date, lastWeight.date);
+                    if (months > 0) {
+                        totalGain += (lastWeight.weight - firstWeight.weight) / months;
+                        totalMonths++;
+                    }
+                }
+            });
+            
+            return totalMonths > 0 ? totalGain / totalMonths : 0;
+        }
+
+        function getMonthsBetween(date1, date2) {
+            const d1 = new Date(date1);
+            const d2 = new Date(date2);
+            return (d2.getFullYear() - d1.getFullYear()) * 12 + (d2.getMonth() - d1.getMonth());
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ar-EG');
+        }
+
+        function getMonthName(monthNumber) {
+            const months = [
+                'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+                'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+            ];
+            return months[monthNumber - 1];
+        }
+
+        // إدارة النماذج
+        function setupForms() {
+            // نموذج إضافة عجل
+            document.getElementById('calfForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const newCalf = {
+                    id: calves.length > 0 ? Math.max(...calves.map(c => c.id)) + 1 : 1,
+                    number: document.getElementById('calfNumber').value,
+                    breed: document.getElementById('breedType').value,
+                    entryDate: document.getElementById('entryDate').value,
+                    entryWeight: parseFloat(document.getElementById('entryWeight').value),
+                    targetWeight: document.getElementById('targetWeight').value ? parseFloat(document.getElementById('targetWeight').value) : null,
+                    notes: document.getElementById('notes').value
+                };
+                
+                calves.push(newCalf);
+                localStorage.setItem('calves', JSON.stringify(calves));
+                
+                // إضافة وزن الدخول تلقائياً
+                const newWeight = {
+                    id: weights.length > 0 ? Math.max(...weights.map(w => w.id)) + 1 : 1,
+                    calfId: newCalf.id,
+                    date: newCalf.entryDate,
+                    weight: newCalf.entryWeight,
+                    feedType: 'علف مركز',
+                    health: 'جيد'
+                };
+                
+                weights.push(newWeight);
+                localStorage.setItem('weights', JSON.stringify(weights));
+                
+                alert(`تم إضافة العجل ${newCalf.number} بنجاح!`);
+                document.getElementById('calfForm').reset();
+                document.getElementById('addCalfModal').style.display = 'none';
+                
+                loadCalvesList();
+                loadDashboard();
+            });
+            
+            // نموذج إضافة وزن
+            document.getElementById('weightForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const newWeight = {
+                    id: weights.length > 0 ? Math.max(...weights.map(w => w.id)) + 1 : 1,
+                    calfId: parseInt(document.getElementById('selectCalf').value),
+                    date: document.getElementById('weightDate').value,
+                    weight: parseFloat(document.getElementById('currentWeight').value),
+                    feedType: document.getElementById('feedType').value,
+                    health: document.getElementById('healthStatus').value
+                };
+                
+                weights.push(newWeight);
+                localStorage.setItem('weights', JSON.stringify(weights));
+                
+                alert('تم تسجيل الوزن بنجاح!');
+                document.getElementById('weightForm').reset();
+                document.getElementById('addWeightModal').style.display = 'none';
+                
+                loadWeightsList();
+                loadDashboard();
+                loadReports();
+            });
+            
+            // تحديث قائمة العجول في نموذج الوزن
+            function updateCalfSelect() {
+                const selectCalf = document.getElementById('selectCalf');
+                selectCalf.innerHTML = '<option value="">-- اختر العجل --</option>';
+                
+                calves.forEach(calf => {
+                    const option = document.createElement('option');
+                    option.value = calf.id;
+                    option.textContent = `${calf.number} - ${calf.breed}`;
+                    selectCalf.appendChild(option);
+                });
+            }
+            
+            updateCalfSelect();
+        }
+
+        // إدارة النوافذ المنبثقة
+        function setupModals() {
+            const modals = document.querySelectorAll('.modal');
+            const closeButtons = document.querySelectorAll('.close-modal');
+            
+            // زر إضافة عجل
+            document.getElementById('addCalfBtn').addEventListener('click', () => {
+                document.getElementById('addCalfModal').style.display = 'flex';
+            });
+            
+            // زر إضافة وزن
+            document.getElementById('addWeightBtn').addEventListener('click', () => {
+                document.getElementById('addWeightModal').style.display = 'flex';
+            });
+            
+            // إغلاق النوافذ
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    modals.forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                });
+            });
+            
+            // إغلاق عند النقر خارج المحتوى
+            window.addEventListener('click', (e) => {
+                modals.forEach(modal => {
+                    if (e.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // تهيئة التطبيق
+        function initApp() {
+            setupTabs();
+            setupForms();
+            setupModals();
+            loadCalvesList();
+            loadDashboard();
+            
+            // تعيين تاريخ اليوم كافتراضي في النماذج
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('entryDate').value = today;
+            document.getElementById('weightDate').value = today;
+        }
+
+        // بدء التطبيق عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
