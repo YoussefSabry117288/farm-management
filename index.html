@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام إدارة مزارع تسمين العجول المتكامل</title>
+    <title>نظام إدارة مزارع تسمين العجول</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Cairo', 'Segoe UI', 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         :root {
@@ -19,27 +18,18 @@
             --primary-dark: #1b4332;
             --secondary: #40916c;
             --accent: #ffb703;
-            --accent-dark: #fb8500;
             --light: #f8f9fa;
             --dark: #212529;
             --gray: #6c757d;
-            --light-gray: #e9ecef;
             --danger: #e63946;
-            --warning: #ffc107;
             --success: #52b788;
-            --info: #4d908e;
-            --purple: #9d4edd;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --radius: 12px;
-            --transition: all 0.3s ease;
         }
 
         body {
             background-color: #f1f7f4;
             color: var(--dark);
             line-height: 1.6;
-            padding-bottom: 90px;
-            background-image: linear-gradient(135deg, #f1f7f4 0%, #e6f2ed 100%);
+            padding-bottom: 80px;
         }
 
         .container {
@@ -52,11 +42,10 @@
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             padding: 20px 15px;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
-            z-index: 1000;
-            border-bottom: 4px solid var(--accent);
+            z-index: 100;
         }
 
         .header-content {
@@ -68,75 +57,20 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-        }
-
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 24px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .logo-text h1 {
-            font-size: 1.6rem;
-            font-weight: 800;
-            margin-bottom: 4px;
-        }
-
-        .logo-text p {
-            font-size: 0.85rem;
-            opacity: 0.9;
-        }
-
-        /* Quick Actions */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            margin: 20px 0;
         }
 
-        .quick-action-btn {
-            background: white;
-            border-radius: var(--radius);
-            padding: 15px 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 2px solid transparent;
-            cursor: pointer;
+        .logo i {
+            font-size: 24px;
         }
 
-        .quick-action-btn:hover {
-            transform: translateY(-3px);
-            border-color: var(--primary);
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
         }
 
-        .quick-action-btn i {
-            font-size: 22px;
-            margin-bottom: 8px;
-            color: var(--primary);
-        }
-
-        .quick-action-btn span {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        /* Stats Cards */
-        .stats-grid {
+        /* Stats */
+        .stats-overview {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
@@ -145,96 +79,57 @@
 
         .stat-card {
             background: white;
-            border-radius: var(--radius);
-            padding: 20px 15px;
-            box-shadow: var(--shadow);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 15px;
-            transition: var(--transition);
-            border-right: 5px solid var(--primary);
+            text-align: center;
         }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stat-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .stat-card i {
             font-size: 24px;
-            color: white;
+            color: var(--primary);
+            margin-bottom: 8px;
         }
 
-        .stat-info {
-            flex: 1;
-        }
-
-        .stat-number {
+        .stat-card .number {
             font-size: 1.8rem;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--dark);
-            line-height: 1;
         }
 
-        .stat-label {
+        .stat-card .label {
             font-size: 0.85rem;
             color: var(--gray);
             margin-top: 5px;
-        }
-
-        .stat-trend {
-            font-size: 0.8rem;
-            padding: 3px 8px;
-            border-radius: 20px;
-            font-weight: 600;
-            margin-top: 5px;
-            display: inline-block;
-        }
-
-        .trend-up {
-            background-color: rgba(82, 183, 136, 0.2);
-            color: var(--success);
-        }
-
-        .trend-down {
-            background-color: rgba(230, 57, 70, 0.2);
-            color: var(--danger);
         }
 
         /* Navigation */
         .nav-tabs {
             display: flex;
             background: white;
-            border-radius: var(--radius);
+            border-radius: 12px;
             margin: 20px 0;
             overflow: hidden;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 140px;
-            z-index: 999;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
         }
 
         .tab {
             flex: 1;
             text-align: center;
-            padding: 16px 10px;
-            font-weight: 700;
+            padding: 15px 10px;
+            font-weight: 600;
             color: var(--gray);
-            transition: var(--transition);
-            border-bottom: 4px solid transparent;
-            background: white;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
             cursor: pointer;
-            font-size: 0.9rem;
         }
 
         .tab.active {
             color: var(--primary);
-            border-bottom: 4px solid var(--primary);
+            border-bottom: 3px solid var(--primary);
             background-color: rgba(45, 106, 79, 0.05);
         }
 
@@ -246,344 +141,165 @@
         /* Tab Content */
         .tab-content {
             display: none;
-            animation: fadeIn 0.5s;
         }
 
         .tab-content.active {
             display: block;
+            animation: fadeIn 0.5s;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        /* Section Header */
-        .section-header {
+        /* Section Title */
+        .section-title {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin: 25px 0 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--light-gray);
         }
 
-        .section-title {
-            font-size: 1.4rem;
-            color: var(--primary-dark);
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .section-title h2 {
+            font-size: 1.3rem;
+            color: var(--dark);
         }
 
-        .section-title i {
-            color: var(--primary);
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn {
-            padding: 12px 20px;
-            border: none;
-            border-radius: var(--radius);
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
+        .add-btn {
             background-color: var(--primary);
             color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(45, 106, 79, 0.3);
-        }
-
-        .btn-secondary {
-            background-color: var(--light-gray);
-            color: var(--dark);
-        }
-
-        .btn-success {
-            background-color: var(--success);
-            color: white;
-        }
-
-        .btn-danger {
-            background-color: var(--danger);
-            color: white;
-        }
-
-        .btn-accent {
-            background-color: var(--accent);
-            color: var(--dark);
-        }
-
-        /* Cards Grid */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .card {
-            background: white;
-            border-radius: var(--radius);
-            padding: 20px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border-top: 5px solid var(--primary);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--dark);
-        }
-
-        .card-badge {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .badge-success {
-            background-color: rgba(82, 183, 136, 0.2);
-            color: var(--success);
-        }
-
-        .badge-warning {
-            background-color: rgba(255, 183, 3, 0.2);
-            color: #856404;
-        }
-
-        .badge-danger {
-            background-color: rgba(230, 57, 70, 0.2);
-            color: var(--danger);
-        }
-
-        .badge-info {
-            background-color: rgba(77, 144, 142, 0.2);
-            color: var(--info);
-        }
-
-        /* Animal Cards */
-        .animal-card {
-            background: white;
-            border-radius: var(--radius);
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border-right: 5px solid var(--primary);
-            position: relative;
-        }
-
-        .animal-card:hover {
-            transform: translateX(-5px);
-        }
-
-        .animal-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .animal-id {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--primary-dark);
-        }
-
-        .animal-breed {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            background-color: var(--light-gray);
-        }
-
-        .animal-details-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .detail-item {
-            text-align: center;
-            padding: 10px;
-            background: var(--light);
-            border-radius: var(--radius);
-        }
-
-        .detail-label {
-            font-size: 0.85rem;
-            color: var(--gray);
-            margin-bottom: 5px;
-        }
-
-        .detail-value {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--dark);
-        }
-
-        .weight-progress {
-            margin: 15px 0;
-        }
-
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-        }
-
-        .progress-bar {
-            height: 10px;
-            background: var(--light-gray);
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 5px;
-            transition: width 0.5s ease;
-        }
-
-        .animal-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 10px;
             border: none;
-            border-radius: var(--radius);
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: var(--transition);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            font-size: 20px;
+            box-shadow: 0 4px 8px rgba(45, 106, 79, 0.3);
+            cursor: pointer;
         }
 
-        /* Weight History */
-        .weight-history {
+        /* Animal List */
+        .animal-list {
             background: white;
-            border-radius: var(--radius);
-            padding: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
             margin-bottom: 20px;
-            box-shadow: var(--shadow);
+        }
+
+        .animal-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        .animal-item:last-child {
+            border-bottom: none;
+        }
+
+        .animal-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a8dadc, #457b9d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            color: white;
+            font-size: 22px;
+        }
+
+        .animal-details {
+            flex: 1;
+        }
+
+        .animal-details h3 {
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .animal-details p {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .animal-weight {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        /* Weight Tracking */
+        .weight-tracking {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .weight-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .weight-title {
+            font-size: 1.2rem;
+            color: var(--dark);
+            font-weight: 600;
         }
 
         .weight-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
         }
 
         .weight-table th {
-            background-color: var(--light);
-            padding: 15px 12px;
+            background-color: #f8f9fa;
+            padding: 12px 10px;
             text-align: right;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--dark);
-            border-bottom: 2px solid var(--light-gray);
-            font-size: 0.9rem;
+            border-bottom: 2px solid #eee;
         }
 
         .weight-table td {
-            padding: 15px 12px;
+            padding: 12px 10px;
             text-align: right;
-            border-bottom: 1px solid var(--light-gray);
+            border-bottom: 1px solid #eee;
         }
 
         .weight-table tr:last-child td {
             border-bottom: none;
         }
 
-        .weight-table tr:hover {
-            background-color: rgba(45, 106, 79, 0.05);
+        .weight-change {
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
         }
 
-        .edit-weight-btn, .delete-weight-btn {
-            padding: 5px 10px;
-            border: none;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: var(--transition);
+        .positive {
+            background-color: rgba(82, 183, 136, 0.2);
+            color: var(--success);
         }
 
-        .edit-weight-btn {
-            background-color: rgba(255, 183, 3, 0.2);
-            color: var(--accent-dark);
-            margin-left: 5px;
-        }
-
-        .delete-weight-btn {
+        .negative {
             background-color: rgba(230, 57, 70, 0.2);
             color: var(--danger);
         }
 
-        /* Charts */
-        .chart-container {
-            background: white;
-            border-radius: var(--radius);
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow);
-        }
-
-        .chart-placeholder {
-            height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border-radius: var(--radius);
-            color: var(--gray);
-            font-weight: 600;
-        }
-
-        /* Modals */
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -592,144 +308,78 @@
             left: 0;
             bottom: 0;
             background-color: rgba(0, 0, 0, 0.5);
-            z-index: 2000;
+            z-index: 1000;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            animation: fadeIn 0.3s;
         }
 
         .modal-content {
             background: white;
-            border-radius: var(--radius);
+            border-radius: 16px;
             width: 100%;
-            max-width: 500px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            max-width: 450px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             max-height: 90vh;
             overflow-y: auto;
-            animation: slideUp 0.3s;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--light-gray);
+            margin-bottom: 20px;
         }
 
         .modal-title {
-            font-size: 1.4rem;
-            color: var(--primary-dark);
-            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--dark);
         }
 
         .close-modal {
             background: none;
             border: none;
-            font-size: 28px;
+            font-size: 24px;
             color: var(--gray);
             cursor: pointer;
-            transition: var(--transition);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .close-modal:hover {
-            background-color: var(--light-gray);
-            color: var(--danger);
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .form-label {
+        .form-group label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: 700;
+            margin-bottom: 5px;
+            font-weight: 600;
             color: var(--dark);
-            font-size: 0.95rem;
         }
 
         .form-control {
             width: 100%;
-            padding: 14px;
-            border: 2px solid var(--light-gray);
-            border-radius: var(--radius);
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
             font-size: 1rem;
-            transition: var(--transition);
-            background: white;
         }
 
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.2);
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
         }
 
-        .form-actions {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        /* Alerts */
-        .alert {
-            padding: 15px 20px;
-            border-radius: var(--radius);
-            margin-bottom: 20px;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            animation: slideIn 0.5s;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(-20px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        .alert-success {
-            background-color: rgba(82, 183, 136, 0.2);
-            color: var(--success);
-            border-right: 4px solid var(--success);
-        }
-
-        .alert-warning {
-            background-color: rgba(255, 183, 3, 0.2);
-            color: #856404;
-            border-right: 4px solid var(--warning);
-        }
-
-        .alert-danger {
-            background-color: rgba(230, 57, 70, 0.2);
-            color: var(--danger);
-            border-right: 4px solid var(--danger);
-        }
-
-        .alert-info {
-            background-color: rgba(77, 144, 142, 0.2);
-            color: var(--info);
-            border-right: 4px solid var(--info);
+        .btn:hover {
+            background-color: var(--secondary);
         }
 
         /* Bottom Navigation */
@@ -743,8 +393,7 @@
             justify-content: space-around;
             padding: 15px 0;
             box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            border-top: 1px solid var(--light-gray);
+            z-index: 100;
         }
 
         .nav-item {
@@ -754,198 +403,23 @@
             color: var(--gray);
             text-decoration: none;
             font-size: 0.8rem;
-            transition: var(--transition);
-            padding: 5px 10px;
-            border-radius: var(--radius);
+            cursor: pointer;
         }
 
         .nav-item.active {
             color: var(--primary);
-            background-color: rgba(45, 106, 79, 0.1);
         }
 
         .nav-item i {
-            font-size: 22px;
+            font-size: 20px;
             margin-bottom: 5px;
         }
 
-        .nav-item:hover {
-            color: var(--primary);
-            transform: translateY(-2px);
-        }
-
         /* Responsive */
-        @media (max-width: 768px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .animal-details-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .quick-actions {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 1024px) {
+        @media (min-width: 768px) {
             .container {
-                max-width: 1000px;
+                max-width: 750px;
                 margin: 0 auto;
-            }
-        }
-
-        /* Loading */
-        .loading {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.9);
-            z-index: 3000;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 5px solid var(--light-gray);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Search Box */
-        .search-box {
-            margin: 20px 0;
-            position: relative;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 15px 50px 15px 20px;
-            border: 2px solid var(--light-gray);
-            border-radius: var(--radius);
-            font-size: 1rem;
-            background: white;
-            transition: var(--transition);
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.2);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray);
-            font-size: 1.2rem;
-        }
-
-        /* Filter */
-        .filter-container {
-            background: white;
-            border-radius: var(--radius);
-            padding: 15px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow);
-        }
-
-        .filter-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            cursor: pointer;
-        }
-
-        .filter-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .filter-select {
-            padding: 10px;
-            border: 1px solid var(--light-gray);
-            border-radius: var(--radius);
-            background: white;
-            font-size: 0.9rem;
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--gray);
-        }
-
-        .empty-state i {
-            font-size: 60px;
-            margin-bottom: 20px;
-            color: var(--light-gray);
-        }
-
-        .empty-state h3 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: var(--dark);
-        }
-
-        /* Print Styles */
-        @media print {
-            .bottom-nav, .nav-tabs, .quick-actions, .action-buttons {
-                display: none !important;
-            }
-            
-            .container {
-                padding: 0;
-            }
-            
-            .card, .animal-card, .weight-history {
-                box-shadow: none;
-                border: 1px solid #ddd;
-                break-inside: avoid;
-            }
-        }
-
-        /* PWA Styles */
-        @media (display-mode: standalone) {
-            body {
-                padding-bottom: 30px;
-            }
-            
-            .bottom-nav {
-                bottom: env(safe-area-inset-bottom);
             }
         }
     </style>
@@ -956,83 +430,35 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-cow"></i>
-                    </div>
-                    <div class="logo-text">
-                        <h1>نظام إدارة مزارع التسمين</h1>
-                        <p>إدارة متكاملة لمزرعة تسمين العجول</p>
-                    </div>
+                    <i class="fas fa-cow"></i>
+                    <h1>إدارة مزرعة تسمين العجول</h1>
                 </div>
-                <div class="current-date" id="currentDate"></div>
             </div>
         </div>
     </header>
 
-    <!-- Loading Overlay -->
-    <div class="loading" id="loading">
-        <div class="loading-spinner"></div>
-        <p>جاري التحميل...</p>
-    </div>
-
-    <!-- Quick Actions -->
     <div class="container">
-        <div class="quick-actions">
-            <div class="quick-action-btn" id="quickAddCalf">
-                <i class="fas fa-plus-circle"></i>
-                <span>إضافة عجل</span>
+        <!-- Stats -->
+        <div class="stats-overview">
+            <div class="stat-card">
+                <i class="fas fa-cow"></i>
+                <div class="number" id="totalCalves">0</div>
+                <div class="label">عدد العجول</div>
             </div>
-            <div class="quick-action-btn" id="quickAddWeight">
+            <div class="stat-card">
                 <i class="fas fa-weight-scale"></i>
-                <span>تسجيل وزن</span>
-            </div>
-            <div class="quick-action-btn" id="quickReports">
-                <i class="fas fa-chart-bar"></i>
-                <span>التقارير</span>
-            </div>
-        </div>
-
-        <!-- Stats Overview -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">
-                    <i class="fas fa-cow"></i>
-                </div>
-                <div class="stat-info">
-                    <div class="stat-number" id="totalCalves">0</div>
-                    <div class="stat-label">إجمالي العجول</div>
-                    <span class="stat-trend trend-up" id="calvesTrend">+0 جديد</span>
-                </div>
+                <div class="number" id="avgWeight">0</div>
+                <div class="label">متوسط الوزن</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon" style="background: linear-gradient(135deg, var(--accent), var(--accent-dark));">
-                    <i class="fas fa-weight-scale"></i>
-                </div>
-                <div class="stat-info">
-                    <div class="stat-number" id="avgWeight">0</div>
-                    <div class="stat-label">متوسط الوزن (كجم)</div>
-                    <span class="stat-trend trend-up" id="weightTrend">+0 كجم</span>
-                </div>
+                <i class="fas fa-arrow-up"></i>
+                <div class="number" id="avgGain">0</div>
+                <div class="label">متوسط زيادة الشهر</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon" style="background: linear-gradient(135deg, var(--success), #1a936f);">
-                    <i class="fas fa-arrow-up"></i>
-                </div>
-                <div class="stat-info">
-                    <div class="stat-number" id="avgGain">0</div>
-                    <div class="stat-label">متوسط الزيادة/شهر</div>
-                    <span class="stat-trend trend-up">+0.5 كجم</span>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon" style="background: linear-gradient(135deg, var(--info), #277da1);">
-                    <i class="fas fa-calendar-check"></i>
-                </div>
-                <div class="stat-info">
-                    <div class="stat-number" id="readyCalves">0</div>
-                    <div class="stat-label">جاهز للتسويق</div>
-                    <span class="stat-trend trend-up">+0 هذا الشهر</span>
-                </div>
+                <i class="fas fa-calendar"></i>
+                <div class="number" id="readyCalves">0</div>
+                <div class="label">جاهز للتسويق</div>
             </div>
         </div>
 
@@ -1050,1160 +476,624 @@
             <div class="tab" data-tab="reports">
                 <i class="fas fa-chart-line"></i> التقارير
             </div>
-            <div class="tab" data-tab="settings">
-                <i class="fas fa-cog"></i> الإعدادات
-            </div>
         </div>
 
         <!-- Dashboard Tab -->
         <div id="dashboard" class="tab-content active">
-            <div class="section-header">
-                <h2 class="section-title"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</h2>
-                <div class="action-buttons">
-                    <button class="btn btn-primary" id="refreshDashboard">
-                        <i class="fas fa-sync-alt"></i> تحديث
-                    </button>
-                </div>
+            <div class="section-title">
+                <h2>لوحة التحكم</h2>
+                <button class="add-btn" id="refreshBtn">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
             </div>
-
-            <!-- Alerts Section -->
-            <div class="cards-grid">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">تنبيهات اليوم</div>
-                        <span class="card-badge badge-warning" id="alertsCount">3</span>
-                    </div>
-                    <div id="todayAlerts">
-                        <!-- Alerts will be loaded here -->
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">العجول المطلوب وزنها</div>
-                        <span class="card-badge badge-danger" id="dueWeightCount">5</span>
-                    </div>
-                    <div id="dueWeightsList">
-                        <!-- Due weights will be loaded here -->
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">أفضل 3 عجول أداءً</div>
-                        <span class="card-badge badge-success">Top 3</span>
-                    </div>
-                    <div id="topPerformers">
-                        <!-- Top performers will be loaded here -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Recent Activities -->
-            <div class="section-header">
-                <h2 class="section-title"><i class="fas fa-history"></i> آخر النشاطات</h2>
-            </div>
-            <div class="card">
-                <div id="recentActivities">
-                    <!-- Recent activities will be loaded here -->
-                </div>
+            <div id="dashboardContent">
+                <!-- سيتم ملؤها بالجافاسكريبت -->
             </div>
         </div>
 
         <!-- Calves Tab -->
         <div id="calves" class="tab-content">
-            <div class="section-header">
-                <h2 class="section-title"><i class="fas fa-cow"></i> إدارة العجول</h2>
-                <div class="action-buttons">
-                    <button class="btn btn-secondary" id="filterCalvesBtn">
-                        <i class="fas fa-filter"></i> تصفية
-                    </button>
-                    <button class="btn btn-primary" id="addCalfBtn">
-                        <i class="fas fa-plus"></i> إضافة عجل
-                    </button>
-                </div>
+            <div class="section-title">
+                <h2>قائمة العجول</h2>
+                <button class="add-btn" id="addCalfBtn">
+                    <i class="fas fa-plus"></i>
+                </button>
             </div>
-
-            <!-- Filter Section -->
-            <div class="filter-container" id="calvesFilter" style="display: none;">
-                <div class="filter-header" onclick="toggleFilter('calvesFilter')">
-                    <h3>خيارات التصفية</h3>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="filter-options">
-                    <div class="filter-group">
-                        <label>نوع السلالة</label>
-                        <select class="filter-select" id="filterBreed">
-                            <option value="">جميع السلالات</option>
-                            <option value="بلدي">بلدي</option>
-                            <option value="هجين">هجين</option>
-                            <option value="فريزيان">فريزيان</option>
-                            <option value="شارولي">شارولي</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>الحالة</label>
-                        <select class="filter-select" id="filterStatus">
-                            <option value="">جميع الحالات</option>
-                            <option value="نشط">نشط</option>
-                            <option value="جاهز للتسويق">جاهز للتسويق</option>
-                            <option value="مباع">مباع</option>
-                            <option value="نافق">نافق</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>فرز حسب</label>
-                        <select class="filter-select" id="filterSort">
-                            <option value="newest">الأحدث</option>
-                            <option value="oldest">الأقدم</option>
-                            <option value="weight">الوزن (من الأعلى)</option>
-                            <option value="gain">معدل النمو</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-actions" style="margin-top: 20px;">
-                    <button class="btn btn-secondary" onclick="resetFilters()">إعادة تعيين</button>
-                    <button class="btn btn-primary" onclick="applyFilters()">تطبيق التصفية</button>
-                </div>
-            </div>
-
-            <!-- Search -->
-            <div class="search-box">
-                <input type="text" class="search-input" id="searchCalves" placeholder="ابحث برقم العجل أو السلالة...">
-                <i class="fas fa-search search-icon"></i>
-            </div>
-
-            <!-- Calves List -->
-            <div id="calvesListContainer">
-                <!-- Calves will be loaded here -->
+            <div id="calvesList">
+                <!-- سيتم ملؤها بالجافاسكريبت -->
             </div>
         </div>
 
         <!-- Weights Tab -->
         <div id="weights" class="tab-content">
-            <div class="section-header">
-                <h2 class="section-title"><i class="fas fa-weight-scale"></i> متابعة الأوزان</h2>
-                <div class="action-buttons">
-                    <button class="btn btn-secondary" id="exportWeights">
-                        <i class="fas fa-download"></i> تصدير
-                    </button>
-                    <button class="btn btn-primary" id="addWeightBtn">
-                        <i class="fas fa-plus"></i> تسجيل وزن
-                    </button>
-                </div>
+            <div class="section-title">
+                <h2>متابعة الأوزان الشهرية</h2>
+                <button class="add-btn" id="addWeightBtn">
+                    <i class="fas fa-plus"></i>
+                </button>
             </div>
-
-            <!-- Weight Statistics -->
-            <div class="cards-grid">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">إجمالي القياسات</div>
-                    </div>
-                    <div class="detail-value" id="totalMeasurements">0</div>
-                    <div class="detail-label">عدد القياسات المسجلة</div>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">آخر قياس</div>
-                    </div>
-                    <div class="detail-value" id="lastMeasurementDate">-</div>
-                    <div class="detail-label">تاريخ آخر وزن مسجل</div>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">أعلى زيادة</div>
-                    </div>
-                    <div class="detail-value" id="maxGain">0 كجم</div>
-                    <div class="detail-label">أعلى زيادة شهرية</div>
-                </div>
-            </div>
-
-            <!-- Weight History -->
-            <div class="section-header">
-                <h2 class="section-title"><i class="fas fa-history"></i> سجل الأوزان</h2>
-            </div>
-            <div class="weight-history">
-                <div id="weightsTableContainer">
-                    <!-- Weights table will be loaded here -->
-                </div>
+            <div id="weightsList">
+                <!-- سيتم ملؤها بالجافاسكريبت -->
             </div>
         </div>
 
         <!-- Reports Tab -->
         <div id="reports" class="tab-content">
-            <div class="section-header">
-                <h2 class="section-title"><i class="fas fa-chart-line"></i> التقارير والإحصائيات</h2>
-                <div class="action-buttons">
-                    <button class="btn btn-secondary" id="printReport">
-                        <i class="fas fa-print"></i> طباعة
-                    </button>
-                    <button class="btn btn-primary" id="generateReport">
-                        <i class="fas fa-file-export"></i> تصدير PDF
-                    </button>
-                </div>
+            <div class="section-title">
+                <h2>تقارير الأداء</h2>
             </div>
-
-            <!-- Report Cards -->
-            <div class="cards-grid">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">تقرير النمو</div>
-                        <span class="card-badge badge-info">شهري</span>
-                    </div>
-                    <div class="chart-placeholder" id="growthChart">
-                        <i class="fas fa-chart-line"></i> مخطط النمو
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">توزيع الأوزان</div>
-                        <span class="card-badge badge-success">تحليل</span>
-                    </div>
-                    <div class="chart-placeholder" id="distributionChart">
-                        <i class="fas fa-chart-pie"></i> مخطط التوزيع
-                    </div>
-                </div>
-            </div>
-
-            <!-- Detailed Reports -->
-            <div class="section-header">
-                <h2 class="section-title"><i class="fas fa-file-alt"></i> تقارير مفصلة</h2>
-            </div>
-            <div class="cards-grid">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">تقرير الأداء التفصيلي</div>
-                    </div>
-                    <div id="detailedReport">
-                        <!-- Detailed report will be loaded here -->
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">تقرير التكلفة والعائد</div>
-                    </div>
-                    <div id="costReport">
-                        <!-- Cost report will be loaded here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Settings Tab -->
-        <div id="settings" class="tab-content">
-            <div class="section-header">
-                <h2 class="section-title"><i class="fas fa-cog"></i> إعدادات النظام</h2>
-            </div>
-
-            <div class="cards-grid">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">إدارة البيانات</div>
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn btn-secondary" onclick="exportData()">
-                            <i class="fas fa-download"></i> نسخ احتياطي
-                        </button>
-                        <button class="btn btn-warning" onclick="importData()">
-                            <i class="fas fa-upload"></i> استعادة بيانات
-                        </button>
-                        <input type="file" id="importFile" accept=".json" style="display: none;">
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn btn-danger" onclick="clearData()">
-                            <i class="fas fa-trash"></i> مسح جميع البيانات
-                        </button>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">إعدادات الإشعارات</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">تذكير بمواعيد الوزن</label>
-                        <select class="form-control" id="weightReminder">
-                            <option value="7">كل أسبوع</option>
-                            <option value="15">كل 15 يوم</option>
-                            <option value="30" selected>كل شهر</option>
-                            <option value="0">لا توجد تذكيرات</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">هدف الوزن للتسويق</label>
-                        <input type="number" class="form-control" id="targetWeight" value="350" step="10">
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">معلومات المزرعة</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">اسم المزرعة</label>
-                        <input type="text" class="form-control" id="farmName" value="مزرعة تسمين العجول">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">المالك</label>
-                        <input type="text" class="form-control" id="ownerName" value="">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">رقم الهاتف</label>
-                        <input type="tel" class="form-control" id="phoneNumber" value="">
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-actions">
-                <button class="btn btn-primary" onclick="saveSettings()">
-                    <i class="fas fa-save"></i> حفظ الإعدادات
-                </button>
+            <div id="reportsContent">
+                <!-- سيتم ملؤها بالجافاسكريبت -->
             </div>
         </div>
     </div>
 
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
-        <a href="#" class="nav-item active" data-tab="dashboard">
+        <div class="nav-item active" data-tab="dashboard">
             <i class="fas fa-home"></i>
             <span>الرئيسية</span>
-        </a>
-        <a href="#" class="nav-item" data-tab="calves">
+        </div>
+        <div class="nav-item" data-tab="calves">
             <i class="fas fa-cow"></i>
             <span>العجول</span>
-        </a>
-        <a href="#" class="nav-item" data-tab="weights">
+        </div>
+        <div class="nav-item" data-tab="weights">
             <i class="fas fa-weight-scale"></i>
             <span>الأوزان</span>
-        </a>
-        <a href="#" class="nav-item" data-tab="reports">
+        </div>
+        <div class="nav-item" data-tab="reports">
             <i class="fas fa-chart-bar"></i>
             <span>التقارير</span>
-        </a>
-        <a href="#" class="nav-item" data-tab="settings">
-            <i class="fas fa-cog"></i>
-            <span>الإعدادات</span>
-        </a>
+        </div>
     </div>
 
-    <!-- Modals -->
-    <!-- Add/Edit Calf Modal -->
-    <div id="calfModal" class="modal">
+    <!-- Add Calf Modal -->
+    <div id="addCalfModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="calfModalTitle">إضافة عجل جديد</h3>
-                <button class="close-modal" onclick="closeModal('calfModal')">&times;</button>
+                <h3 class="modal-title">إضافة عجل جديد</h3>
+                <button class="close-modal" id="closeCalfModal">&times;</button>
             </div>
             <form id="calfForm">
-                <input type="hidden" id="calfId">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">رقم العجل *</label>
-                        <input type="text" class="form-control" id="calfNumber" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">نوع السلالة *</label>
-                        <select class="form-control" id="calfBreed" required>
-                            <option value="">اختر السلالة</option>
-                            <option value="بلدي">بلدي</option>
-                            <option value="هجين">هجين</option>
-                            <option value="فريزيان">فريزيان</option>
-                            <option value="شارولي">شارولي</option>
-                            <option value="هولشتاين">هولشتاين</option>
-                            <option value="جيرسي">جيرسي</option>
-                            <option value="أخرى">أخرى</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">تاريخ الدخول *</label>
-                        <input type="date" class="form-control" id="entryDate" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">العمر (شهر) *</label>
-                        <input type="number" class="form-control" id="calfAge" min="1" max="36" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">الوزن الأولي (كجم) *</label>
-                        <input type="number" class="form-control" id="initialWeight" step="0.1" min="50" max="500" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">السعر (اختياري)</label>
-                        <input type="number" class="form-control" id="calfPrice" step="100" min="0">
-                    </div>
+                <div class="form-group">
+                    <label for="calfNumber">رقم العجل *</label>
+                    <input type="text" id="calfNumber" class="form-control" placeholder="مثال: ع-١٢٣" required>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">المصدر</label>
-                    <input type="text" class="form-control" id="calfSource" placeholder="مثل: سوق، مزرعة أخرى">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">ملاحظات</label>
-                    <textarea class="form-control" id="calfNotes" rows="3"></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">الحالة</label>
-                    <select class="form-control" id="calfStatus">
-                        <option value="نشط" selected>نشط</option>
-                        <option value="جاهز للتسويق">جاهز للتسويق</option>
-                        <option value="مباع">مباع</option>
-                        <option value="نافق">نافق</option>
+                    <label for="breedType">نوع السلالة</label>
+                    <select id="breedType" class="form-control">
+                        <option value="بلدي">بلدي</option>
+                        <option value="هجين">هجين</option>
+                        <option value="فريزيان">فريزيان</option>
                     </select>
                 </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('calfModal')">إلغاء</button>
-                    <button type="submit" class="btn btn-primary">حفظ</button>
+                <div class="form-group">
+                    <label for="entryDate">تاريخ الدخول *</label>
+                    <input type="date" id="entryDate" class="form-control" required>
                 </div>
+                <div class="form-group">
+                    <label for="initialWeight">الوزن الأولي (كجم) *</label>
+                    <input type="number" id="initialWeight" class="form-control" step="0.1" placeholder="مثال: ١٢٠.٥" required>
+                </div>
+                <div class="form-group">
+                    <label for="calfNotes">ملاحظات</label>
+                    <textarea id="calfNotes" class="form-control" rows="2" placeholder="ملاحظات إضافية"></textarea>
+                </div>
+                <button type="submit" class="btn">إضافة العجل</button>
             </form>
         </div>
     </div>
 
-    <!-- Add/Edit Weight Modal -->
-    <div id="weightModal" class="modal">
+    <!-- Add Weight Modal -->
+    <div id="addWeightModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="weightModalTitle">تسجيل وزن جديد</h3>
-                <button class="close-modal" onclick="closeModal('weightModal')">&times;</button>
+                <h3 class="modal-title">تسجيل وزن شهري</h3>
+                <button class="close-modal" id="closeWeightModal">&times;</button>
             </div>
             <form id="weightForm">
-                <input type="hidden" id="weightId">
                 <div class="form-group">
-                    <label class="form-label">اختر العجل *</label>
-                    <select class="form-control" id="weightCalfId" required>
-                        <option value="">-- اختر العجل --</option>
-                    </select>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">تاريخ الوزن *</label>
-                        <input type="date" class="form-control" id="weightDate" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">الوزن (كجم) *</label>
-                        <input type="number" class="form-control" id="weightValue" step="0.1" min="50" max="800" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">نوع العلف</label>
-                        <select class="form-control" id="feedType">
-                            <option value="علف مركز">علف مركز</option>
-                            <option value="علف أخضر">علف أخضر</option>
-                            <option value="تبن">تبن</option>
-                            <option value="مخلوط" selected>مخلوط</option>
-                            <option value="ذرة">ذرة</option>
-                            <option value="شعير">شعير</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">كمية العلف (كجم/يوم)</label>
-                        <input type="number" class="form-control" id="feedAmount" step="0.5" min="0" max="20">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">الحالة الصحية</label>
-                    <select class="form-control" id="healthStatus">
-                        <option value="ممتاز">ممتاز</option>
-                        <option value="جيد" selected>جيد</option>
-                        <option value="متوسط">متوسط</option>
-                        <option value="يحتاج رعاية">يحتاج رعاية</option>
-                        <option value="مريض">مريض</option>
+                    <label for="selectCalf">اختر العجل *</label>
+                    <select id="selectCalf" class="form-control" required>
+                        <!-- سيتم ملؤها بالجافاسكريبت -->
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">ملاحظات الوزن</label>
-                    <textarea class="form-control" id="weightNotes" rows="3"></textarea>
+                    <label for="weightDate">تاريخ الوزن *</label>
+                    <input type="date" id="weightDate" class="form-control" required>
                 </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('weightModal')">إلغاء</button>
-                    <button type="submit" class="btn btn-primary">حفظ الوزن</button>
+                <div class="form-group">
+                    <label for="currentWeight">الوزن الحالي (كجم) *</label>
+                    <input type="number" id="currentWeight" class="form-control" step="0.1" placeholder="مثال: ١٨٥.٥" required>
                 </div>
+                <button type="submit" class="btn">تسجيل الوزن</button>
             </form>
         </div>
     </div>
 
-    <!-- Delete Confirmation Modal -->
-    <div id="deleteModal" class="modal">
+    <!-- Message Modal -->
+    <div id="messageModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">تأكيد الحذف</h3>
-                <button class="close-modal" onclick="closeModal('deleteModal')">&times;</button>
+                <h3 class="modal-title" id="messageTitle">رسالة</h3>
+                <button class="close-modal" id="closeMessageModal">&times;</button>
             </div>
             <div class="form-group">
-                <p id="deleteMessage">هل أنت متأكد من رغبتك في حذف هذا العنصر؟</p>
+                <p id="messageContent"></p>
             </div>
             <div class="form-actions">
-                <button type="button" class="btn btn-secondary" onclick="closeModal('deleteModal')">إلغاء</button>
-                <button type="button" class="btn btn-danger" onclick="confirmDelete()">حذف</button>
+                <button class="btn" id="closeMessageBtn">موافق</button>
             </div>
         </div>
     </div>
+<script>
+        // تعريف المتغيرات العامة
+        let calves = [];
+        let weights = [];
 
-    <!-- Alert Modal -->
-    <div id="alertModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="alertTitle">تنبيه</h3>
-                <button class="close-modal" onclick="closeModal('alertModal')">&times;</button>
-            </div>
-            <div class="form-group">
-                <p id="alertMessage"></p>
-            </div>
-            <div class="form-actions">
-                <button type="button" class="btn btn-primary" onclick="closeModal('alertModal')">موافق</button>
-            </div>
-        </div>
-    </div>
+        // تهيئة التطبيق عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('تم تحميل الصفحة، جاري تهيئة التطبيق...');
+            initApp();
+        });
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <script>
-        // البيانات المخزنة
-        let calves = JSON.parse(localStorage.getItem('farm_calves')) || [];
-        let weights = JSON.parse(localStorage.getItem('farm_weights')) || [];
-        let settings = JSON.parse(localStorage.getItem('farm_settings')) || {};
-        let activities = JSON.parse(localStorage.getItem('farm_activities')) || [];
-        
-        // المتغيرات العامة
-        let currentCalfId = null;
-        let currentWeightId = null;
-        let deleteCallback = null;
-        let deleteType = null;
-        let deleteId = null;
-        
-        // تهيئة البيانات التجريبية إذا كانت فارغة
-        function initializeSampleData() {
-            if (calves.length === 0) {
-                calves = [
-                    {
-                        id: 1,
-                        number: "ع-١٠١",
-                        breed: "هجين",
-                        entryDate: "2023-10-01",
-                        age: 8,
-                        initialWeight: 120,
-                        price: 15000,
-                        source: "سوق المحلة",
-                        status: "نشط",
-                        notes: "صحة جيدة، شهية ممتازة"
-                    },
-                    {
-                        id: 2,
-                        number: "ع-١٠٢",
-                        breed: "بلدي",
-                        entryDate: "2023-10-05",
-                        age: 7,
-                        initialWeight: 110,
-                        price: 12000,
-                        source: "مزرعة أبو أحمد",
-                        status: "نشط",
-                        notes: "يحتاج متابعة مستمرة"
-                    },
-                    {
-                        id: 3,
-                        number: "ع-١٠٣",
-                        breed: "فريزيان",
-                        entryDate: "2023-10-10",
-                        age: 9,
-                        initialWeight: 150,
-                        price: 20000,
-                        source: "مستورد",
-                        status: "جاهز للتسويق",
-                        notes: "ممتاز، معدل نمو عالي"
-                    },
-                    {
-                        id: 4,
-                        number: "ع-١٠٤",
-                        breed: "شارولي",
-                        entryDate: "2023-10-15",
-                        age: 10,
-                        initialWeight: 130,
-                        price: 18000,
-                        source: "سوق أكتوبر",
-                        status: "نشط",
-                        notes: ""
-                    }
-                ];
-                saveCalves();
-            }
-            
-            if (weights.length === 0) {
-                weights = [
-                    { id: 1, calfId: 1, date: "2023-10-01", weight: 120, feedType: "علف مركز", feedAmount: 8, health: "جيد", notes: "وزن الدخول" },
-                    { id: 2, calfId: 1, date: "2023-11-01", weight: 150, feedType: "مخلوط", feedAmount: 9, health: "ممتاز", notes: "زيادة ممتازة" },
-                    { id: 3, calfId: 1, date: "2023-12-01", weight: 185, feedType: "علف مركز", feedAmount: 10, health: "جيد", notes: "معدل نمو ثابت" },
-                    { id: 4, calfId: 2, date: "2023-10-05", weight: 110, feedType: "علف أخضر", feedAmount: 7, health: "متوسط", notes: "وزن الدخول" },
-                    { id: 5, calfId: 2, date: "2023-11-05", weight: 135, feedType: "علف مركز", feedAmount: 8, health: "جيد", notes: "تحسن في الصحة" },
-                    { id: 6, calfId: 2, date: "2023-12-05", weight: 160, feedType: "مخلوط", feedAmount: 9, health: "ممتاز", notes: "أداء ممتاز" },
-                    { id: 7, calfId: 3, date: "2023-10-10", weight: 150, feedType: "علف مركز", feedAmount: 10, health: "ممتاز", notes: "وزن الدخول" },
-                    { id: 8, calfId: 3, date: "2023-11-10", weight: 190, feedType: "مخلوط", feedAmount: 11, health: "ممتاز", notes: "زيادة كبيرة" },
-                    { id: 9, calfId: 3, date: "2023-12-10", weight: 230, feedType: "علف مركز", feedAmount: 12, health: "ممتاز", notes: "جاهز للتسويق" }
-                ];
-                saveWeights();
-            }
-            
-            if (Object.keys(settings).length === 0) {
-                settings = {
-                    farmName: "مزرعة تسمين العجول",
-                    ownerName: "",
-                    phoneNumber: "",
-                    targetWeight: 350,
-                    weightReminder: 30,
-                    currency: "ج.م"
-                };
-                saveSettings();
-            }
-            
-            if (activities.length === 0) {
-                activities = [
-                    { id: 1, type: "calf_add", message: "تم إضافة العجل ع-١٠١", date: "2023-12-15", time: "10:30" },
-                    { id: 2, type: "weight_add", message: "تم تسجيل وزن للعجل ع-١٠١: 185 كجم", date: "2023-12-15", time: "11:45" },
-                    { id: 3, type: "status_change", message: "تغيرت حالة العجل ع-١٠٣ إلى 'جاهز للتسويق'", date: "2023-12-14", time: "09:20" }
-                ];
-                saveActivities();
-            }
-        }
-        
-        // وظائف الحفظ
-        function saveCalves() {
-            localStorage.setItem('farm_calves', JSON.stringify(calves));
-        }
-        
-        function saveWeights() {
-            localStorage.setItem('farm_weights', JSON.stringify(weights));
-        }
-        
-        function saveSettings() {
-            localStorage.setItem('farm_settings', JSON.stringify(settings));
-        }
-        
-        function saveActivities() {
-            // حفظ آخر 50 نشاط فقط
-            if (activities.length > 50) {
-                activities = activities.slice(-50);
-            }
-            localStorage.setItem('farm_activities', JSON.stringify(activities));
-        }
-        
-        // إضافة نشاط جديد
-        function addActivity(type, message) {
-            const now = new Date();
-            const activity = {
-                id: activities.length > 0 ? Math.max(...activities.map(a => a.id)) + 1 : 1,
-                type: type,
-                message: message,
-                date: now.toISOString().split('T')[0],
-                time: now.toTimeString().split(' ')[0].substring(0, 5)
-            };
-            activities.push(activity);
-            saveActivities();
-        }
-        
         // تهيئة التطبيق
         function initApp() {
-            initializeSampleData();
-            updateCurrentDate();
-            setupEventListeners();
-            loadDashboard();
-            setupTabs();
-            setupDateInputs();
+            console.log('جاري تهيئة التطبيق...');
             
-            // تحديث البيانات كل دقيقة
-            setInterval(updateStats, 60000);
-        }
-        
-        // تحديث التاريخ الحالي
-        function updateCurrentDate() {
-            const now = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('currentDate').textContent = now.toLocaleDateString('ar-EG', options);
-        }
-        
-        // إعداد المشغلات
-        function setupEventListeners() {
-            // الأزرار السريعة
-            document.getElementById('quickAddCalf').addEventListener('click', () => openCalfModal());
-            document.getElementById('quickAddWeight').addEventListener('click', () => openWeightModal());
-            document.getElementById('quickReports').addEventListener('click', () => switchTab('reports'));
+            // تحميل البيانات من localStorage
+            loadData();
             
-            // أزرار التبويبات
-            document.getElementById('addCalfBtn').addEventListener('click', () => openCalfModal());
-            document.getElementById('addWeightBtn').addEventListener('click', () => openWeightModal());
-            document.getElementById('filterCalvesBtn').addEventListener('click', () => toggleFilter('calvesFilter'));
-            document.getElementById('refreshDashboard').addEventListener('click', loadDashboard);
-            
-            // النماذج
-            document.getElementById('calfForm').addEventListener('submit', saveCalf);
-            document.getElementById('weightForm').addEventListener('submit', saveWeight);
-            
-            // البحث
-            document.getElementById('searchCalves').addEventListener('input', searchCalves);
-            
-            // تصدير البيانات
-            document.getElementById('exportWeights').addEventListener('click', exportWeightsToCSV);
-            
-            // تحديث الإعدادات
-            document.getElementById('farmName').value = settings.farmName || '';
-            document.getElementById('ownerName').value = settings.ownerName || '';
-            document.getElementById('phoneNumber').value = settings.phoneNumber || '';
-            document.getElementById('targetWeight').value = settings.targetWeight || 350;
-            document.getElementById('weightReminder').value = settings.weightReminder || 30;
-        }
-        
-        // إعداد التبويبات
-        function setupTabs() {
-            const tabs = document.querySelectorAll('.tab, .nav-item');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            tabs.forEach(tab => {
-                tab.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const tabId = tab.getAttribute('data-tab');
-                    
-                    // تحديث التبويب النشط
-                    tabs.forEach(t => {
-                        t.classList.remove('active');
-                        if (t.classList.contains('nav-item')) {
-                            t.classList.remove('active');
-                        }
-                    });
-                    tab.classList.add('active');
-                    
-                    // إظهار المحتوى المناسب
-                    tabContents.forEach(content => {
-                        content.classList.remove('active');
-                        if (content.id === tabId) {
-                            content.classList.add('active');
-                            loadTabContent(tabId);
-                        }
-                    });
-                });
-            });
-        }
-        
-        // تحميل محتوى التبويب
-        function loadTabContent(tabId) {
-            switch(tabId) {
-                case 'dashboard':
-                    loadDashboard();
-                    break;
-                case 'calves':
-                    loadCalves();
-                    break;
-                case 'weights':
-                    loadWeights();
-                    break;
-                case 'reports':
-                    loadReports();
-                    break;
-                case 'settings':
-                    loadSettings();
-                    break;
-            }
-        }
-        
-        // تحويل التبويب
-        function switchTab(tabId) {
-            const tab = document.querySelector(`[data-tab="${tabId}"]`);
-            if (tab) tab.click();
-        }
-        
-        // إعداد حقول التاريخ
-        function setupDateInputs() {
-            // تعيين تاريخ اليوم كقيمة افتراضية
+            // إعداد التاريخ الحالي في النماذج
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('entryDate').value = today;
             document.getElementById('weightDate').value = today;
             
-            // استخدام flatpickr للتقويم العربي (إذا كان محملاً)
-            if (typeof flatpickr !== 'undefined') {
-                flatpickr.localize(flatpickr.l10ns.ar);
+            // إعداد معالجي الأحداث
+            setupEventListeners();
+            
+            // تحميل المحتوى الأولي
+            loadDashboard();
+            
+            console.log('تم تهيئة التطبيق بنجاح');
+        }
+
+        // تحميل البيانات من localStorage
+        function loadData() {
+            console.log('جاري تحميل البيانات...');
+            
+            // تحميل بيانات العجول
+            const savedCalves = localStorage.getItem('farm_calves');
+            if (savedCalves) {
+                calves = JSON.parse(savedCalves);
+                console.log('تم تحميل العجول:', calves.length);
+            } else {
+                // بيانات تجريبية
+                calves = [
+                    { id: 1, number: "ع-١٠١", breed: "هجين", entryDate: "2024-01-01", initialWeight: 120, notes: "صحة جيدة" },
+                    { id: 2, number: "ع-١٠٢", breed: "بلدي", entryDate: "2024-01-05", initialWeight: 110, notes: "يحتاج متابعة" }
+                ];
+                localStorage.setItem('farm_calves', JSON.stringify(calves));
+                console.log('تم إنشاء بيانات تجريبية للعجول');
+            }
+            
+            // تحميل بيانات الأوزان
+            const savedWeights = localStorage.getItem('farm_weights');
+            if (savedWeights) {
+                weights = JSON.parse(savedWeights);
+                console.log('تم تحميل الأوزان:', weights.length);
+            } else {
+                // بيانات تجريبية
+                weights = [
+                    { id: 1, calfId: 1, date: "2024-01-01", weight: 120 },
+                    { id: 2, calfId: 1, date: "2024-02-01", weight: 150 },
+                    { id: 3, calfId: 2, date: "2024-01-05", weight: 110 },
+                    { id: 4, calfId: 2, date: "2024-02-05", weight: 135 }
+                ];
+                localStorage.setItem('farm_weights', JSON.stringify(weights));
+                console.log('تم إنشاء بيانات تجريبية للأوزان');
             }
         }
-        
-        // تحميل لوحة التحكم
-        function loadDashboard() {
-            updateStats();
-            loadTodayAlerts();
-            loadDueWeights();
-            loadTopPerformers();
-            loadRecentActivities();
+
+        // حفظ البيانات
+        function saveData() {
+            localStorage.setItem('farm_calves', JSON.stringify(calves));
+            localStorage.setItem('farm_weights', JSON.stringify(weights));
+            console.log('تم حفظ البيانات');
         }
-        
-        // تحديث الإحصائيات
-        function updateStats() {
-            // إجمالي العجول
-            const totalCalves = calves.length;
-            const activeCalves = calves.filter(c => c.status === 'نشط').length;
-            document.getElementById('totalCalves').textContent = totalCalves;
-            document.getElementById('calvesTrend').textContent = `+${activeCalves} نشط`;
+
+        // إعداد معالجي الأحداث
+        function setupEventListeners() {
+            console.log('جاري إعداد معالجي الأحداث...');
             
-            // متوسط الوزن
-            const avgWeight = calculateAverageWeight();
-            document.getElementById('avgWeight').textContent = avgWeight.toFixed(1);
-            
-            // متوسط الزيادة
-            const avgGain = calculateAverageMonthlyGain();
-            document.getElementById('avgGain').textContent = avgGain.toFixed(1);
-            document.getElementById('weightTrend').textContent = `+${avgGain.toFixed(1)} كجم`;
-            
-            // جاهز للتسويق
-            const readyCalves = calves.filter(c => c.status === 'جاهز للتسويق').length;
-            document.getElementById('readyCalves').textContent = readyCalves;
-        }
-        
-        // تحميل التنبيهات اليومية
-        function loadTodayAlerts() {
-            const today = new Date().toISOString().split('T')[0];
-            const todayAlerts = [];
-            
-            // تحقق من العجول التي تحتاج وزن
-            calves.forEach(calf => {
-                const lastWeight = getLastWeight(calf.id);
-                if (lastWeight) {
-                    const daysSinceLastWeight = Math.floor((new Date() - new Date(lastWeight.date)) / (1000 * 60 * 60 * 24));
-                    if (daysSinceLastWeight > (settings.weightReminder || 30)) {
-                        todayAlerts.push({
-                            type: 'warning',
-                            message: `العجل ${calf.number} يحتاج وزن جديد (${daysSinceLastWeight} يوم منذ آخر وزن)`,
-                            icon: 'fa-weight-scale'
-                        });
+            // أحداث التبويبات
+            const tabs = document.querySelectorAll('.tab, .nav-item');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // إزالة النشاط من جميع التبويبات
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // إضافة النشاط للتبويب المحدد
+                    this.classList.add('active');
+                    
+                    // إخفاء جميع المحتويات
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // إظهار المحتوى المطلوب
+                    const activeContent = document.getElementById(tabId);
+                    if (activeContent) {
+                        activeContent.classList.add('active');
+                        
+                        // تحميل المحتوى بناءً على التبويب
+                        switch(tabId) {
+                            case 'dashboard':
+                                loadDashboard();
+                                break;
+                            case 'calves':
+                                loadCalvesList();
+                                break;
+                            case 'weights':
+                                loadWeightsList();
+                                break;
+                            case 'reports':
+                                loadReports();
+                                break;
+                        }
                     }
-                }
-            });
-            
-            // تحقق من العجول الجاهزة للتسويق
-            calves.filter(calf => calf.status === 'جاهز للتسويق').forEach(calf => {
-                todayAlerts.push({
-                    type: 'success',
-                    message: `العجل ${calf.number} جاهز للتسويق`,
-                    icon: 'fa-dollar-sign'
                 });
             });
             
-            // تحقق من العجول التي تحتاج رعاية
-            weights.forEach(weight => {
-                if (weight.health === 'يحتاج رعاية' || weight.health === 'مريض') {
-                    const calf = calves.find(c => c.id === weight.calfId);
-                    if (calf) {
-                        todayAlerts.push({
-                            type: 'danger',
-                            message: `العجل ${calf.number} يحتاج رعاية طبية`,
-                            icon: 'fa-heartbeat'
-                        });
-                    }
+            // نموذج إضافة عجل
+            document.getElementById('calfForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const calfData = {
+                    id: calves.length > 0 ? Math.max(...calves.map(c => c.id)) + 1 : 1,
+                    number: document.getElementById('calfNumber').value,
+                    breed: document.getElementById('breedType').value,
+                    entryDate: document.getElementById('entryDate').value,
+                    initialWeight: parseFloat(document.getElementById('initialWeight').value),
+                    notes: document.getElementById('calfNotes').value
+                };
+                
+                // إضافة العجل
+                calves.push(calfData);
+                saveData();
+                
+                // إضافة الوزن الأولي تلقائياً
+                const weightData = {
+                    id: weights.length > 0 ? Math.max(...weights.map(w => w.id)) + 1 : 1,
+                    calfId: calfData.id,
+                    date: calfData.entryDate,
+                    weight: calfData.initialWeight
+                };
+                weights.push(weightData);
+                saveData();
+                
+                // إغلاق النافذة وإعادة التحميل
+                closeModal('addCalfModal');
+                loadCalvesList();
+                updateStats();
+                showMessage('نجاح', `تم إضافة العجل ${calfData.number} بنجاح`);
+            });
+            
+            // نموذج إضافة وزن
+            document.getElementById('weightForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const weightData = {
+                    id: weights.length > 0 ? Math.max(...weights.map(w => w.id)) + 1 : 1,
+                    calfId: parseInt(document.getElementById('selectCalf').value),
+                    date: document.getElementById('weightDate').value,
+                    weight: parseFloat(document.getElementById('currentWeight').value)
+                };
+                
+                // إضافة الوزن
+                weights.push(weightData);
+                saveData();
+                
+                // إغلاق النافذة وإعادة التحميل
+                closeModal('addWeightModal');
+                loadWeightsList();
+                updateStats();
+                showMessage('نجاح', 'تم تسجيل الوزن بنجاح');
+            });
+            
+            // زر إضافة عجل
+            document.getElementById('addCalfBtn').addEventListener('click', function() {
+                openModal('addCalfModal');
+            });
+            
+            // زر إضافة وزن
+            document.getElementById('addWeightBtn').addEventListener('click', function() {
+                populateCalfSelect();
+                openModal('addWeightModal');
+            });
+            
+            // زر تحديث
+            document.getElementById('refreshBtn').addEventListener('click', function() {
+                loadDashboard();
+            });
+            
+            // أزرار إغلاق النوافذ
+            document.getElementById('closeCalfModal').addEventListener('click', function() {
+                closeModal('addCalfModal');
+            });
+            
+            document.getElementById('closeWeightModal').addEventListener('click', function() {
+                closeModal('addWeightModal');
+            });
+            
+            document.getElementById('closeMessageModal').addEventListener('click', function() {
+                closeModal('messageModal');
+            });
+            
+            document.getElementById('closeMessageBtn').addEventListener('click', function() {
+                closeModal('messageModal');
+            });
+            
+            // إغلاق النوافذ عند النقر خارجها
+            window.addEventListener('click', function(event) {
+                if (event.target.classList.contains('modal')) {
+                    event.target.style.display = 'none';
                 }
             });
+        }
+
+        // فتح نافذة منبثقة
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        // إغلاق نافذة منبثقة
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
             
-            // تحديث العداد
-            document.getElementById('alertsCount').textContent = todayAlerts.length;
-            
-            // عرض التنبيهات
-            const alertsContainer = document.getElementById('todayAlerts');
-            alertsContainer.innerHTML = '';
-            
-            if (todayAlerts.length === 0) {
-                alertsContainer.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-check-circle"></i>
-                        <p>لا توجد تنبيهات اليوم</p>
-                    </div>
-                `;
-                return;
+            // إعادة تعيين النماذج
+            if (modalId === 'addCalfModal') {
+                document.getElementById('calfForm').reset();
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('entryDate').value = today;
             }
+            if (modalId === 'addWeightModal') {
+                document.getElementById('weightForm').reset();
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('weightDate').value = today;
+            }
+        }
+
+        // عرض رسالة
+        function showMessage(title, content) {
+            document.getElementById('messageTitle').textContent = title;
+            document.getElementById('messageContent').textContent = content;
+            openModal('messageModal');
+        }
+
+        // ملء قائمة اختيار العجول
+        function populateCalfSelect() {
+            const select = document.getElementById('selectCalf');
+            select.innerHTML = '<option value="">-- اختر العجل --</option>';
             
-            todayAlerts.slice(0, 3).forEach(alert => {
-                const alertClass = `alert-${alert.type}`;
-                const alertElement = document.createElement('div');
-                alertElement.className = `alert ${alertClass}`;
-                alertElement.innerHTML = `
-                    <i class="fas ${alert.icon}"></i>
-                    <span>${alert.message}</span>
-                `;
-                alertsContainer.appendChild(alertElement);
+            calves.forEach(calf => {
+                const option = document.createElement('option');
+                option.value = calf.id;
+                option.textContent = `${calf.number} - ${calf.breed}`;
+                select.appendChild(option);
             });
         }
-        
-        // تحميل العجول التي تحتاج وزن
-        function loadDueWeights() {
-            const dueCalves = [];
-            const reminderDays = settings.weightReminder || 30;
+
+        // الحصول على آخر وزن للعجل
+        function getLastWeight(calfId) {
+            const calfWeights = weights.filter(w => w.calfId === calfId);
+            if (calfWeights.length === 0) return null;
+            return calfWeights.sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+        }
+
+        // حساب الزيادة الشهرية
+        function calculateMonthlyGain(calfId) {
+            const calfWeights = weights.filter(w => w.calfId === calfId)
+                .sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            if (calfWeights.length < 2) return 0;
+            
+            const firstWeight = calfWeights[0];
+            const lastWeight = calfWeights[calfWeights.length - 1];
+            
+            const months = getMonthsBetween(firstWeight.date, lastWeight.date);
+            if (months === 0) return 0;
+            
+            return (lastWeight.weight - firstWeight.weight) / months;
+        }
+
+        // حساب عدد الأشهر بين تاريخين
+        function getMonthsBetween(date1, date2) {
+            const d1 = new Date(date1);
+            const d2 = new Date(date2);
+            return (d2.getFullYear() - d1.getFullYear()) * 12 + (d2.getMonth() - d1.getMonth());
+        }
+
+        // تنسيق التاريخ
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ar-EG');
+        }
+
+        // تحديث الإحصائيات
+        function updateStats() {
+            // إجمالي العجول
+            document.getElementById('totalCalves').textContent = calves.length;
+            
+            // متوسط الوزن
+            let totalWeight = 0;
+            let weightCount = 0;
             
             calves.forEach(calf => {
                 const lastWeight = getLastWeight(calf.id);
                 if (lastWeight) {
-                    const daysSinceLastWeight = Math.floor((new Date() - new Date(lastWeight.date)) / (1000 * 60 * 60 * 24));
-                    if (daysSinceLastWeight > reminderDays) {
-                        dueCalves.push({
+                    totalWeight += lastWeight.weight;
+                    weightCount++;
+                } else {
+                    totalWeight += calf.initialWeight;
+                    weightCount++;
+                }
+            });
+            
+            const avgWeight = weightCount > 0 ? (totalWeight / weightCount).toFixed(1) : "0";
+            document.getElementById('avgWeight').textContent = avgWeight;
+            
+            // متوسط الزيادة الشهرية
+            let totalGain = 0;
+            let gainCount = 0;
+            
+            calves.forEach(calf => {
+                const monthlyGain = calculateMonthlyGain(calf.id);
+                if (monthlyGain > 0) {
+                    totalGain += monthlyGain;
+                    gainCount++;
+                }
+            });
+            
+            const avgGain = gainCount > 0 ? (totalGain / gainCount).toFixed(1) : "0";
+            document.getElementById('avgGain').textContent = avgGain;
+            
+            // العجول التي وصلت لـ 300 كجم (جاهزة للتسويق)
+            let readyCount = 0;
+            calves.forEach(calf => {
+                const lastWeight = getLastWeight(calf.id);
+                const currentWeight = lastWeight ? lastWeight.weight : calf.initialWeight;
+                if (currentWeight >= 300) {
+                    readyCount++;
+                }
+            });
+            
+            document.getElementById('readyCalves').textContent = readyCount;
+        }
+
+        // تحميل لوحة التحكم
+        function loadDashboard() {
+            updateStats();
+            
+            const content = document.getElementById('dashboardContent');
+            let html = '<div class="animal-list">';
+            
+            // عرض العجول التي تحتاج وزن (آخر وزن منذ أكثر من 30 يوم)
+            const today = new Date();
+            const calvesNeedWeight = [];
+            
+            calves.forEach(calf => {
+                const lastWeight = getLastWeight(calf.id);
+                if (lastWeight) {
+                    const lastDate = new Date(lastWeight.date);
+                    const daysDiff = Math.floor((today - lastDate) / (1000 * 60 * 60 * 24));
+                    if (daysDiff > 30) {
+                        calvesNeedWeight.push({
                             calf: calf,
-                            days: daysSinceLastWeight,
-                            lastWeight: lastWeight.weight
+                            days: daysDiff
                         });
                     }
                 } else {
                     // إذا لم يكن له وزن مسجل بعد
-                    dueCalves.push({
+                    calvesNeedWeight.push({
                         calf: calf,
-                        days: 'أكثر من 30',
-                        lastWeight: 'لم يسجل'
+                        days: "أكثر من 30"
                     });
                 }
             });
             
-            // تحديث العداد
-            document.getElementById('dueWeightCount').textContent = dueCalves.length;
-            
-            // عرض القائمة
-            const container = document.getElementById('dueWeightsList');
-            container.innerHTML = '';
-            
-            if (dueCalves.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-check-circle"></i>
-                        <p>جميع العجول محدثة</p>
+            if (calvesNeedWeight.length > 0) {
+                html += '<h3 style="padding: 15px; color: var(--danger);">العجول التي تحتاج وزن</h3>';
+                calvesNeedWeight.forEach(item => {
+                    const lastWeight = getLastWeight(item.calf.id);
+                    html += `
+                        <div class="animal-item" onclick="viewCalfDetails(${item.calf.id})">
+                            <div class="animal-icon" style="background: linear-gradient(135deg, #ffb703, #fb8500);">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="animal-details">
+                                <h3>${item.calf.number}</h3>
+                                <p>${item.calf.breed} | منذ ${item.days} يوم</p>
+                                <p class="animal-weight">آخر وزن: ${lastWeight ? lastWeight.weight + ' كجم' : 'لم يسجل'}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                html += `
+                    <div style="padding: 40px; text-align: center; color: var(--gray);">
+                        <i class="fas fa-check-circle" style="font-size: 48px; margin-bottom: 20px; color: var(--success);"></i>
+                        <p>جميع العجول محدثة! لا توجد عجول تحتاج وزن.</p>
                     </div>
                 `;
-                return;
             }
             
-            dueCalves.slice(0, 5).forEach(item => {
-                const itemElement = document.createElement('div');
-                itemElement.className = 'animal-card';
-                itemElement.innerHTML = `
-                    <div class="animal-card-header">
-                        <div class="animal-id">${item.calf.number}</div>
-                        <span class="animal-breed">${item.calf.breed}</span>
-                    </div>
-                    <div class="animal-details-grid">
-                        <div class="detail-item">
-                            <div class="detail-label">آخر وزن</div>
-                            <div class="detail-value">${item.lastWeight} كجم</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">منذ آخر وزن</div>
-                            <div class="detail-value">${item.days} يوم</div>
-                        </div>
-                    </div>
-                    <div class="animal-actions">
-                        <button class="action-btn" style="background: #e9ecef;" onclick="openWeightModalForCalf(${item.calf.id})">
-                            <i class="fas fa-weight-scale"></i> تسجيل وزن
-                        </button>
-                        <button class="action-btn" style="background: #f8f9fa;" onclick="viewCalfDetails(${item.calf.id})">
-                            <i class="fas fa-eye"></i> عرض
-                        </button>
-                    </div>
-                `;
-                container.appendChild(itemElement);
-            });
+            html += '</div>';
+            content.innerHTML = html;
         }
-        
-        // تحميل أفضل العجول أداءً
-        function loadTopPerformers() {
-            const performers = calves.map(calf => {
-                const firstWeight = getFirstWeight(calf.id);
-                const lastWeight = getLastWeight(calf.id);
-                let monthlyGain = 0;
-                
-                if (firstWeight && lastWeight && firstWeight !== lastWeight) {
-                    const months = getMonthsBetween(firstWeight.date, lastWeight.date);
-                    if (months > 0) {
-                        monthlyGain = (lastWeight.weight - firstWeight.weight) / months;
-                    }
-                }
-                
-                return {
-                    ...calf,
-                    monthlyGain: monthlyGain,
-                    currentWeight: lastWeight ? lastWeight.weight : calf.initialWeight
-                };
-            })
-            .filter(calf => calf.monthlyGain > 0)
-            .sort((a, b) => b.monthlyGain - a.monthlyGain)
-            .slice(0, 3);
-            
-            const container = document.getElementById('topPerformers');
-            container.innerHTML = '';
-            
-            if (performers.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-chart-line"></i>
-                        <p>لا توجد بيانات كافية</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            performers.forEach((calf, index) => {
-                const rankColors = ['#ffd700', '#c0c0c0', '#cd7f32'];
-                const itemElement = document.createElement('div');
-                itemElement.className = 'animal-card';
-                itemElement.innerHTML = `
-                    <div class="animal-card-header">
-                        <div class="animal-id">${calf.number}</div>
-                        <span class="animal-breed" style="background: ${rankColors[index]}; color: white;">
-                            ${index + 1}# ${calf.breed}
-                        </span>
-                    </div>
-                    <div class="animal-details-grid">
-                        <div class="detail-item">
-                            <div class="detail-label">الوزن الحالي</div>
-                            <div class="detail-value">${calf.currentWeight.toFixed(1)} كجم</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">معدل النمو</div>
-                            <div class="detail-value">+${calf.monthlyGain.toFixed(1)} كجم/شهر</div>
-                        </div>
-                    </div>
-                    <div class="weight-progress">
-                        <div class="progress-label">
-                            <span>تقدم نحو الهدف</span>
-                            <span>${Math.min(100, Math.round((calf.currentWeight / (settings.targetWeight || 350)) * 100))}%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${Math.min(100, (calf.currentWeight / (settings.targetWeight || 350)) * 100)}%"></div>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(itemElement);
-            });
-        }
-        
-        // تحميل النشاطات الحديثة
-        function loadRecentActivities() {
-            const container = document.getElementById('recentActivities');
-            container.innerHTML = '';
-            
-            const recentActivities = activities.slice(-5).reverse();
-            
-            if (recentActivities.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-history"></i>
-                        <p>لا توجد نشاطات حديثة</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            recentActivities.forEach(activity => {
-                const activityElement = document.createElement('div');
-                activityElement.className = 'alert alert-info';
-                activityElement.style.marginBottom = '10px';
-                activityElement.innerHTML = `
-                    <i class="fas fa-${getActivityIcon(activity.type)}"></i>
-                    <div>
-                        <strong>${activity.message}</strong>
-                        <div style="font-size: 0.85rem; color: #6c757d; margin-top: 5px;">
-                            ${activity.date} - ${activity.time}
-                        </div>
-                    </div>
-                `;
-                container.appendChild(activityElement);
-            });
-        }
-        
+
         // تحميل قائمة العجول
-        function loadCalves() {
-            const container = document.getElementById('calvesListContainer');
-            const filteredCalves = getFilteredCalves();
+        function loadCalvesList() {
+            const container = document.getElementById('calvesList');
             
-            if (filteredCalves.length === 0) {
+            if (calves.length === 0) {
                 container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-cow"></i>
-                        <h3>لا توجد عجول</h3>
-                        <p>ابدأ بإضافة أول عجل إلى مزرعتك</p>
-                        <button class="btn btn-primary" onclick="openCalfModal()" style="margin-top: 20px;">
-                            <i class="fas fa-plus"></i> إضافة عجل جديد
+                    <div style="padding: 40px; text-align: center; color: var(--gray);">
+                        <i class="fas fa-cow" style="font-size: 48px; margin-bottom: 20px; color: var(--primary);"></i>
+                        <p>لا توجد عجول مضافة</p>
+                        <button class="btn" onclick="openModal('addCalfModal')" style="margin-top: 20px; width: auto; padding: 10px 20px;">
+                            <i class="fas fa-plus"></i> إضافة أول عجل
                         </button>
                     </div>
                 `;
                 return;
             }
             
-            container.innerHTML = '';
+            let html = '<div class="animal-list">';
             
-            filteredCalves.forEach(calf => {
+            calves.forEach(calf => {
                 const lastWeight = getLastWeight(calf.id);
-                const firstWeight = getFirstWeight(calf.id);
                 const monthlyGain = calculateMonthlyGain(calf.id);
                 
-                const card = document.createElement('div');
-                card.className = 'animal-card';
-                card.innerHTML = `
-                    <div class="animal-card-header">
-                        <div class="animal-id">${calf.number}</div>
-                        <span class="animal-breed">${calf.breed}</span>
-                        <span class="card-badge ${getStatusBadgeClass(calf.status)}">${calf.status}</span>
-                    </div>
-                    
-                    <div class="animal-details-grid">
-                        <div class="detail-item">
-                            <div class="detail-label">الوزن الحالي</div>
-                            <div class="detail-value">${lastWeight ? lastWeight.weight.toFixed(1) : calf.initialWeight} كجم</div>
+                html += `
+                    <div class="animal-item" onclick="viewCalfDetails(${calf.id})">
+                        <div class="animal-icon" style="background: linear-gradient(135deg, #a8dadc, #457b9d);">
+                            <i class="fas fa-cow"></i>
                         </div>
-                        <div class="detail-item">
-                            <div class="detail-label">معدل النمو</div>
-                            <div class="detail-value">${monthlyGain > 0 ? '+' + monthlyGain.toFixed(1) : '0.0'} كجم/شهر</div>
+                        <div class="animal-details">
+                            <h3>${calf.number}</h3>
+                            <p>${calf.breed} | تاريخ الدخول: ${formatDate(calf.entryDate)}</p>
+                            <p class="animal-weight">
+                                الوزن الحالي: ${lastWeight ? lastWeight.weight + ' كجم' : calf.initialWeight + ' كجم'}
+                                ${monthlyGain > 0 ? ` | +${monthlyGain.toFixed(1)} كجم/شهر` : ''}
+                            </p>
                         </div>
-                        <div class="detail-item">
-                            <div class="detail-label">العمر</div>
-                            <div class="detail-value">${calf.age} شهر</div>
+                        <div>
+                            <i class="fas fa-chevron-left" style="color: var(--gray);"></i>
                         </div>
-                    </div>
-                    
-                    <div class="weight-progress">
-                        <div class="progress-label">
-                            <span>تقدم نحو الهدف</span>
-                            <span>${calculateProgress(calf.id)}%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${calculateProgress(calf.id)}%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="animal-actions">
-                        <button class="action-btn" style="background: var(--primary); color: white;" onclick="openWeightModalForCalf(${calf.id})">
-                            <i class="fas fa-weight-scale"></i> تسجيل وزن
-                        </button>
-                        <button class="action-btn" style="background: var(--accent); color: var(--dark);" onclick="editCalf(${calf.id})">
-                            <i class="fas fa-edit"></i> تعديل
-                        </button>
-                        <button class="action-btn" style="background: var(--light-gray);" onclick="viewCalfDetails(${calf.id})">
-                            <i class="fas fa-eye"></i> تفاصيل
-                        </button>
-                        <button class="action-btn" style="background: rgba(230, 57, 70, 0.1); color: var(--danger);" onclick="confirmDeleteCalf(${calf.id})">
-                            <i class="fas fa-trash"></i> حذف
-                        </button>
                     </div>
                 `;
-                container.appendChild(card);
             });
+            
+            html += '</div>';
+            container.innerHTML = html;
         }
-        
-        // تحميل الأوزان
-        function loadWeights() {
-            updateWeightStats();
+
+        // تحميل قائمة الأوزان
+        function loadWeightsList() {
+            const container = document.getElementById('weightsList');
             
-            const container = document.getElementById('weightsTableContainer');
-            const allWeights = [...weights].sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            if (allWeights.length === 0) {
+            if (weights.length === 0) {
                 container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-weight-scale"></i>
-                        <h3>لا توجد أوزان مسجلة</h3>
-                        <p>ابدأ بتسجيل أول وزن لعجولك</p>
-                        <button class="btn btn-primary" onclick="openWeightModal()" style="margin-top: 20px;">
-                            <i class="fas fa-plus"></i> تسجيل وزن جديد
+                    <div style="padding: 40px; text-align: center; color: var(--gray);">
+                        <i class="fas fa-weight-scale" style="font-size: 48px; margin-bottom: 20px; color: var(--primary);"></i>
+                        <p>لا توجد أوزان مسجلة</p>
+                        <button class="btn" onclick="openModal('addWeightModal')" style="margin-top: 20px; width: auto; padding: 10px 20px;">
+                            <i class="fas fa-plus"></i> تسجيل أول وزن
                         </button>
                     </div>
                 `;
@@ -2212,349 +1102,142 @@
             
             // تجميع الأوزان حسب العجل
             const groupedWeights = {};
-            allWeights.forEach(weight => {
+            weights.forEach(weight => {
                 if (!groupedWeights[weight.calfId]) {
                     groupedWeights[weight.calfId] = [];
                 }
                 groupedWeights[weight.calfId].push(weight);
             });
             
-            let tableHTML = '';
+            let html = '';
             
-            Object.entries(groupedWeights).forEach(([calfId, weightList]) => {
+            Object.keys(groupedWeights).forEach(calfId => {
                 const calf = calves.find(c => c.id == calfId);
                 if (!calf) return;
                 
-                tableHTML += `
-                    <div style="margin-bottom: 30px;">
-                        <h3 style="color: var(--primary); margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--light-gray);">
-                            <i class="fas fa-cow"></i> ${calf.number} - ${calf.breed}
-                        </h3>
+                html += `
+                    <div class="weight-tracking">
+                        <div class="weight-header">
+                            <div class="weight-title">${calf.number} - ${calf.breed}</div>
+                        </div>
                         <table class="weight-table">
                             <thead>
                                 <tr>
                                     <th>التاريخ</th>
                                     <th>الوزن (كجم)</th>
                                     <th>الزيادة</th>
-                                    <th>نوع العلف</th>
-                                    <th>الحالة الصحية</th>
-                                    <th>الملاحظات</th>
-                                    <th>الإجراءات</th>
                                 </tr>
                             </thead>
                             <tbody>
                 `;
                 
-                weightList.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach((weight, index) => {
-                    const prevWeight = index < weightList.length - 1 ? weightList[index + 1].weight : weight.weight;
+                const calfWeights = groupedWeights[calfId].sort((a, b) => new Date(a.date) - new Date(b.date));
+                
+                calfWeights.forEach((weight, index) => {
+                    const prevWeight = index > 0 ? calfWeights[index - 1].weight : weight.weight;
                     const change = weight.weight - prevWeight;
-                    const changeClass = change >= 0 ? 'trend-up' : 'trend-down';
-                    const changeText = index === weightList.length - 1 ? '-' : (change >= 0 ? `+${change.toFixed(1)}` : change.toFixed(1));
+                    const changeClass = change >= 0 ? 'positive' : 'negative';
+                    const changeText = index === 0 ? '-' : (change >= 0 ? `+${change.toFixed(1)}` : change.toFixed(1));
                     
-                    tableHTML += `
+                    html += `
                         <tr>
                             <td>${formatDate(weight.date)}</td>
                             <td><strong>${weight.weight.toFixed(1)}</strong></td>
-                            <td><span class="stat-trend ${changeClass}">${changeText}</span></td>
-                            <td>${weight.feedType || '-'}</td>
-                            <td>${weight.health || '-'}</td>
-                            <td>${weight.notes || '-'}</td>
-                            <td>
-                                <button class="edit-weight-btn" onclick="editWeight(${weight.id})">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="delete-weight-btn" onclick="confirmDeleteWeight(${weight.id})">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
+                            <td><span class="weight-change ${changeClass}">${changeText}</span></td>
                         </tr>
                     `;
                 });
                 
-                tableHTML += `
+                html += `
                             </tbody>
                         </table>
                     </div>
                 `;
             });
             
-            container.innerHTML = tableHTML;
+            container.innerHTML = html;
         }
-        
+
         // تحميل التقارير
         function loadReports() {
-            loadGrowthChart();
-            loadDistributionChart();
-            loadDetailedReport();
-            loadCostReport();
-        }
-        
-        // تحميل الإعدادات
-        function loadSettings() {
-            // تم تحميلها في setupEventListeners
-        }
-        
-        // البحث في العجول
-        function searchCalves() {
-            const searchTerm = document.getElementById('searchCalves').value.toLowerCase();
-            loadCalves(); // سيتم التصفية في getFilteredCalves
-        }
-        
-        // الحصول على العجول المصفاة
-        function getFilteredCalves() {
-            let filtered = [...calves];
-            const searchTerm = document.getElementById('searchCalves')?.value.toLowerCase() || '';
-            const breedFilter = document.getElementById('filterBreed')?.value || '';
-            const statusFilter = document.getElementById('filterStatus')?.value || '';
-            const sortFilter = document.getElementById('filterSort')?.value || 'newest';
+            const container = document.getElementById('reportsContent');
             
-            // التصفية حسب البحث
-            if (searchTerm) {
-                filtered = filtered.filter(calf => 
-                    calf.number.toLowerCase().includes(searchTerm) ||
-                    calf.breed.toLowerCase().includes(searchTerm)
-                );
-            }
+            let html = `
+                <div class="weight-tracking">
+                    <div class="weight-header">
+                        <div class="weight-title">إحصائيات المزرعة</div>
+                    </div>
+                    <table class="weight-table">
+                        <thead>
+                            <tr>
+                                <th>المؤشر</th>
+                                <th>القيمة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
             
-            // التصفية حسب السلالة
-            if (breedFilter) {
-                filtered = filtered.filter(calf => calf.breed === breedFilter);
-            }
+            // إجمالي العجول
+            html += `
+                <tr>
+                    <td>إجمالي عدد العجول</td>
+                    <td><strong>${calves.length}</strong></td>
+                </tr>
+            `;
             
-            // التصفية حسب الحالة
-            if (statusFilter) {
-                filtered = filtered.filter(calf => calf.status === statusFilter);
-            }
+            // متوسط الوزن
+            let totalWeight = 0;
+            calves.forEach(calf => {
+                const lastWeight = getLastWeight(calf.id);
+                totalWeight += lastWeight ? lastWeight.weight : calf.initialWeight;
+            });
+            const avgWeight = calves.length > 0 ? (totalWeight / calves.length).toFixed(1) : "0";
             
-            // الترتيب
-            switch(sortFilter) {
-                case 'newest':
-                    filtered.sort((a, b) => new Date(b.entryDate) - new Date(a.entryDate));
-                    break;
-                case 'oldest':
-                    filtered.sort((a, b) => new Date(a.entryDate) - new Date(b.entryDate));
-                    break;
-                case 'weight':
-                    filtered.sort((a, b) => {
-                        const weightA = getLastWeight(a.id)?.weight || a.initialWeight;
-                        const weightB = getLastWeight(b.id)?.weight || b.initialWeight;
-                        return weightB - weightA;
-                    });
-                    break;
-                case 'gain':
-                    filtered.sort((a, b) => {
-                        const gainA = calculateMonthlyGain(a.id);
-                        const gainB = calculateMonthlyGain(b.id);
-                        return gainB - gainA;
-                    });
-                    break;
-            }
+            html += `
+                <tr>
+                    <td>متوسط الوزن الحالي</td>
+                    <td><strong>${avgWeight} كجم</strong></td>
+                </tr>
+            `;
             
-            return filtered;
-        }
-        
-        // فتح نافذة إضافة/تعديل عجل
-        function openCalfModal(calfId = null) {
-            const modal = document.getElementById('calfModal');
-            const title = document.getElementById('calfModalTitle');
-            const form = document.getElementById('calfForm');
+            // إجمالي القياسات
+            html += `
+                <tr>
+                    <td>إجمالي قياسات الأوزان</td>
+                    <td><strong>${weights.length}</strong></td>
+                </tr>
+            `;
             
-            if (calfId) {
-                // وضع التعديل
-                const calf = calves.find(c => c.id === calfId);
-                if (calf) {
-                    title.textContent = `تعديل العجل: ${calf.number}`;
-                    document.getElementById('calfId').value = calf.id;
-                    document.getElementById('calfNumber').value = calf.number;
-                    document.getElementById('calfBreed').value = calf.breed;
-                    document.getElementById('entryDate').value = calf.entryDate;
-                    document.getElementById('calfAge').value = calf.age;
-                    document.getElementById('initialWeight').value = calf.initialWeight;
-                    document.getElementById('calfPrice').value = calf.price || '';
-                    document.getElementById('calfSource').value = calf.source || '';
-                    document.getElementById('calfNotes').value = calf.notes || '';
-                    document.getElementById('calfStatus').value = calf.status;
-                    currentCalfId = calfId;
+            // أفضل عجل من حيث النمو
+            let bestCalf = null;
+            let bestGain = 0;
+            
+            calves.forEach(calf => {
+                const gain = calculateMonthlyGain(calf.id);
+                if (gain > bestGain) {
+                    bestGain = gain;
+                    bestCalf = calf;
                 }
-            } else {
-                // وضع الإضافة
-                title.textContent = 'إضافة عجل جديد';
-                form.reset();
-                document.getElementById('entryDate').value = new Date().toISOString().split('T')[0];
-                document.getElementById('calfStatus').value = 'نشط';
-                currentCalfId = null;
-            }
-            
-            modal.style.display = 'flex';
-        }
-        
-        // فتح نافذة إضافة/تعديل وزن
-        function openWeightModal(weightId = null) {
-            const modal = document.getElementById('weightModal');
-            const title = document.getElementById('weightModalTitle');
-            const form = document.getElementById('weightForm');
-            const calfSelect = document.getElementById('weightCalfId');
-            
-            // ملء قائمة العجول
-            calfSelect.innerHTML = '<option value="">-- اختر العجل --</option>';
-            calves.filter(c => c.status === 'نشط').forEach(calf => {
-                const option = document.createElement('option');
-                option.value = calf.id;
-                option.textContent = `${calf.number} - ${calf.breed}`;
-                calfSelect.appendChild(option);
             });
             
-            if (weightId) {
-                // وضع التعديل
-                const weight = weights.find(w => w.id === weightId);
-                if (weight) {
-                    title.textContent = 'تعديل الوزن';
-                    document.getElementById('weightId').value = weight.id;
-                    document.getElementById('weightCalfId').value = weight.calfId;
-                    document.getElementById('weightDate').value = weight.date;
-                    document.getElementById('weightValue').value = weight.weight;
-                    document.getElementById('feedType').value = weight.feedType || 'مخلوط';
-                    document.getElementById('feedAmount').value = weight.feedAmount || '';
-                    document.getElementById('healthStatus').value = weight.health || 'جيد';
-                    document.getElementById('weightNotes').value = weight.notes || '';
-                    currentWeightId = weightId;
-                }
-            } else {
-                // وضع الإضافة
-                title.textContent = 'تسجيل وزن جديد';
-                form.reset();
-                document.getElementById('weightDate').value = new Date().toISOString().split('T')[0];
-                document.getElementById('feedType').value = 'مخلوط';
-                document.getElementById('healthStatus').value = 'جيد';
-                currentWeightId = null;
+            if (bestCalf) {
+                html += `
+                    <tr>
+                        <td>أفضل عجل من حيث النمو</td>
+                        <td><strong>${bestCalf.number} (+${bestGain.toFixed(1)} كجم/شهر)</strong></td>
+                    </tr>
+                `;
             }
             
-            modal.style.display = 'flex';
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            container.innerHTML = html;
         }
-        
-        // فتح نافذة الوزن لعجل محدد
-        function openWeightModalForCalf(calfId) {
-            openWeightModal();
-            document.getElementById('weightCalfId').value = calfId;
-        }
-        
-        // حفظ العجل
-        function saveCalf(e) {
-            e.preventDefault();
-            
-            const calfData = {
-                id: currentCalfId || (calves.length > 0 ? Math.max(...calves.map(c => c.id)) + 1 : 1),
-                number: document.getElementById('calfNumber').value,
-                breed: document.getElementById('calfBreed').value,
-                entryDate: document.getElementById('entryDate').value,
-                age: parseInt(document.getElementById('calfAge').value),
-                initialWeight: parseFloat(document.getElementById('initialWeight').value),
-                price: document.getElementById('calfPrice').value ? parseInt(document.getElementById('calfPrice').value) : null,
-                source: document.getElementById('calfSource').value,
-                notes: document.getElementById('calfNotes').value,
-                status: document.getElementById('calfStatus').value
-            };
-            
-            if (currentCalfId) {
-                // تحديث العجل الموجود
-                const index = calves.findIndex(c => c.id === currentCalfId);
-                if (index !== -1) {
-                    calves[index] = calfData;
-                    addActivity('calf_update', `تم تعديل العجل ${calfData.number}`);
-                }
-            } else {
-                // إضافة عجل جديد
-                calves.push(calfData);
-                addActivity('calf_add', `تم إضافة العجل ${calfData.number}`);
-                
-                // إضافة الوزن الأولي تلقائياً
-                const newWeight = {
-                    id: weights.length > 0 ? Math.max(...weights.map(w => w.id)) + 1 : 1,
-                    calfId: calfData.id,
-                    date: calfData.entryDate,
-                    weight: calfData.initialWeight,
-                    feedType: 'علف مركز',
-                    health: 'جيد',
-                    notes: 'وزن الدخول الأولي'
-                };
-                weights.push(newWeight);
-                saveWeights();
-                addActivity('weight_add', `تم تسجيل الوزن الأولي للعجل ${calfData.number}: ${calfData.initialWeight} كجم`);
-            }
-            
-            saveCalves();
-            closeModal('calfModal');
-            
-            // تحديث الواجهة
-            loadCalves();
-            loadDashboard();
-            updateStats();
-            
-            showAlert('success', currentCalfId ? 'تم تعديل العجل بنجاح' : 'تم إضافة العجل بنجاح');
-        }
-        
-        // حفظ الوزن
-        function saveWeight(e) {
-            e.preventDefault();
-            
-            const weightData = {
-                id: currentWeightId || (weights.length > 0 ? Math.max(...weights.map(w => w.id)) + 1 : 1),
-                calfId: parseInt(document.getElementById('weightCalfId').value),
-                date: document.getElementById('weightDate').value,
-                weight: parseFloat(document.getElementById('weightValue').value),
-                feedType: document.getElementById('feedType').value,
-                feedAmount: document.getElementById('feedAmount').value ? parseFloat(document.getElementById('feedAmount').value) : null,
-                health: document.getElementById('healthStatus').value,
-                notes: document.getElementById('weightNotes').value
-            };
-            
-            const calf = calves.find(c => c.id === weightData.calfId);
-            if (!calf) {
-                showAlert('error', 'العجل غير موجود');
-                return;
-            }
-            
-            if (currentWeightId) {
-                // تحديث الوزن الموجود
-                const index = weights.findIndex(w => w.id === currentWeightId);
-                if (index !== -1) {
-                    weights[index] = weightData;
-                    addActivity('weight_update', `تم تعديل وزن العجل ${calf.number}`);
-                }
-            } else {
-                // إضافة وزن جديد
-                weights.push(weightData);
-                addActivity('weight_add', `تم تسجيل وزن جديد للعجل ${calf.number}: ${weightData.weight} كجم`);
-                
-                // تحقق إذا وصل العجل للوزن المستهدف
-                if (weightData.weight >= (settings.targetWeight || 350) && calf.status === 'نشط') {
-                    calf.status = 'جاهز للتسويق';
-                    saveCalves();
-                    addActivity('status_change', `تغيرت حالة العجل ${calf.number} إلى 'جاهز للتسويق'`);
-                }
-            }
-            
-            saveWeights();
-            closeModal('weightModal');
-            
-            // تحديث الواجهة
-            loadWeights();
-            loadDashboard();
-            updateStats();
-            
-            showAlert('success', currentWeightId ? 'تم تعديل الوزن بنجاح' : 'تم تسجيل الوزن بنجاح');
-        }
-        
-        // تعديل العجل
-        function editCalf(calfId) {
-            openCalfModal(calfId);
-        }
-        
-        // تعديل الوزن
-        function editWeight(weightId) {
-            openWeightModal(weightId);
-        }
-        
+
         // عرض تفاصيل العجل
         function viewCalfDetails(calfId) {
             const calf = calves.find(c => c.id === calfId);
@@ -2572,27 +1255,27 @@
                                 <th>التاريخ</th>
                                 <th>الوزن</th>
                                 <th>الزيادة</th>
-                                <th>نوع العلف</th>
-                                <th>الحالة</th>
                             </tr>
                         </thead>
                         <tbody>
-                            ${calfWeights.map((weight, index) => {
-                                const prevWeight = index > 0 ? calfWeights[index - 1].weight : weight.weight;
-                                const change = weight.weight - prevWeight;
-                                const changeClass = change >= 0 ? 'trend-up' : 'trend-down';
-                                const changeText = index === 0 ? '-' : (change >= 0 ? `+${change.toFixed(1)}` : change.toFixed(1));
-                                
-                                return `
-                                    <tr>
-                                        <td>${formatDate(weight.date)}</td>
-                                        <td><strong>${weight.weight.toFixed(1)} كجم</strong></td>
-                                        <td><span class="stat-trend ${changeClass}">${changeText}</span></td>
-                                        <td>${weight.feedType || '-'}</td>
-                                        <td>${weight.health || '-'}</td>
-                                    </tr>
-                                `;
-                            }).join('')}
+                `;
+                
+                calfWeights.forEach((weight, index) => {
+                    const prevWeight = index > 0 ? calfWeights[index - 1].weight : weight.weight;
+                    const change = weight.weight - prevWeight;
+                    const changeClass = change >= 0 ? 'positive' : 'negative';
+                    const changeText = index === 0 ? '-' : (change >= 0 ? `+${change.toFixed(1)}` : change.toFixed(1));
+                    
+                    weightHistory += `
+                        <tr>
+                            <td>${formatDate(weight.date)}</td>
+                            <td><strong>${weight.weight.toFixed(1)} كجم</strong></td>
+                            <td><span class="weight-change ${changeClass}">${changeText}</span></td>
+                        </tr>
+                    `;
+                });
+                
+                weightHistory += `
                         </tbody>
                     </table>
                 `;
@@ -2600,513 +1283,21 @@
             
             const lastWeight = getLastWeight(calfId);
             const monthlyGain = calculateMonthlyGain(calfId);
-            const progress = calculateProgress(calfId);
             
             const message = `
                 <strong>تفاصيل العجل:</strong> ${calf.number}<br>
                 <strong>السلالة:</strong> ${calf.breed}<br>
-                <strong>الحالة:</strong> ${calf.status}<br>
                 <strong>تاريخ الدخول:</strong> ${formatDate(calf.entryDate)}<br>
-                <strong>العمر:</strong> ${calf.age} شهر<br>
+                <strong>الوزن الأولي:</strong> ${calf.initialWeight} كجم<br>
                 <strong>الوزن الحالي:</strong> ${lastWeight ? lastWeight.weight.toFixed(1) : calf.initialWeight} كجم<br>
-                <strong>معدل النمو:</strong> ${monthlyGain > 0 ? '+' + monthlyGain.toFixed(1) : '0.0'} كجم/شهر<br>
-                <strong>التقدم نحو الهدف:</strong> ${progress}%<br><br>
+                <strong>معدل النمو:</strong> ${monthlyGain > 0 ? '+' + monthlyGain.toFixed(1) : '0.0'} كجم/شهر<br><br>
                 ${calf.notes ? `<strong>ملاحظات:</strong> ${calf.notes}<br><br>` : ''}
                 <strong>سجل الأوزان:</strong><br>
                 ${weightHistory}
             `;
             
-            showAlert('info', message);
+            showMessage('تفاصيل العجل', message);
         }
-        
-        // تأكيد حذف العجل
-        function confirmDeleteCalf(calfId) {
-            const calf = calves.find(c => c.id === calfId);
-            if (!calf) return;
-            
-            deleteType = 'calf';
-            deleteId = calfId;
-            document.getElementById('deleteMessage').textContent = `هل أنت متأكد من رغبتك في حذف العجل ${calf.number}؟ سيتم حذف جميع أوزانه أيضاً.`;
-            openModal('deleteModal');
-        }
-        
-        // تأكيد حذف الوزن
-        function confirmDeleteWeight(weightId) {
-            const weight = weights.find(w => w.id === weightId);
-            if (!weight) return;
-            
-            const calf = calves.find(c => c.id === weight.calfId);
-            
-            deleteType = 'weight';
-            deleteId = weightId;
-            document.getElementById('deleteMessage').textContent = `هل أنت متأكد من رغبتك في حذف هذا الوزن؟`;
-            openModal('deleteModal');
-        }
-        
-        // تنفيذ الحذف
-        function confirmDelete() {
-            if (deleteType === 'calf') {
-                // حذف العجل وأوزانه
-                const calf = calves.find(c => c.id === deleteId);
-                if (calf) {
-                    calves = calves.filter(c => c.id !== deleteId);
-                    weights = weights.filter(w => w.calfId !== deleteId);
-                    addActivity('calf_delete', `تم حذف العجل ${calf.number} وأوزانه`);
-                }
-            } else if (deleteType === 'weight') {
-                // حذف الوزن فقط
-                const weight = weights.find(w => w.id === deleteId);
-                if (weight) {
-                    weights = weights.filter(w => w.id !== deleteId);
-                    addActivity('weight_delete', `تم حذف سجل وزن`);
-                }
-            }
-            
-            saveCalves();
-            saveWeights();
-            closeModal('deleteModal');
-            
-            // تحديث الواجهة
-            loadCalves();
-            loadWeights();
-            loadDashboard();
-            updateStats();
-            
-            showAlert('success', 'تم الحذف بنجاح');
-        }
-        
-        // تحميل مخطط النمو
-        function loadGrowthChart() {
-            // تنفيذ مخطط بسيط باستخدام SVG أو CSS
-            const container = document.getElementById('growthChart');
-            container.innerHTML = `
-                <div style="text-align: center; padding: 40px;">
-                    <i class="fas fa-chart-line" style="font-size: 60px; color: var(--primary); margin-bottom: 20px;"></i>
-                    <h3 style="color: var(--dark); margin-bottom: 10px;">مخطط النمو الشهري</h3>
-                    <p style="color: var(--gray);">سيتم تطوير المخططات في تحديث قادم</p>
-                    <button class="btn btn-primary" onclick="showAlert('info', 'سيتم إضافة المخططات التفاعلية في التحديث القادم')" style="margin-top: 20px;">
-                        <i class="fas fa-info-circle"></i> مزيد من المعلومات
-                    </button>
-                </div>
-            `;
-        }
-        
-        // تحميل مخطط التوزيع
-        function loadDistributionChart() {
-            const container = document.getElementById('distributionChart');
-            container.innerHTML = `
-                <div style="text-align: center; padding: 40px;">
-                    <i class="fas fa-chart-pie" style="font-size: 60px; color: var(--success); margin-bottom: 20px;"></i>
-                    <h3 style="color: var(--dark); margin-bottom: 10px;">توزيع العجول حسب الوزن</h3>
-                    <p style="color: var(--gray);">سيتم تطوير المخططات في تحديث قادم</p>
-                </div>
-            `;
-        }
-        
-        // تحميل التقرير التفصيلي
-        function loadDetailedReport() {
-            const container = document.getElementById('detailedReport');
-            
-            const activeCalves = calves.filter(c => c.status === 'نشط').length;
-            const readyCalves = calves.filter(c => c.status === 'جاهز للتسويق').length;
-            const soldCalves = calves.filter(c => c.status === 'مباع').length;
-            const avgWeight = calculateAverageWeight();
-            const avgGain = calculateAverageMonthlyGain();
-            
-            container.innerHTML = `
-                <div style="padding: 15px;">
-                    <h4 style="color: var(--primary); margin-bottom: 15px;">معلومات عامة</h4>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px;">
-                        <div style="background: var(--light); padding: 10px; border-radius: 8px;">
-                            <div style="font-size: 0.9rem; color: var(--gray);">إجمالي العجول</div>
-                            <div style="font-size: 1.2rem; font-weight: bold; color: var(--dark);">${calves.length}</div>
-                        </div>
-                        <div style="background: var(--light); padding: 10px; border-radius: 8px;">
-                            <div style="font-size: 0.9rem; color: var(--gray);">العجول النشطة</div>
-                            <div style="font-size: 1.2rem; font-weight: bold; color: var(--success);">${activeCalves}</div>
-                        </div>
-                        <div style="background: var(--light); padding: 10px; border-radius: 8px;">
-                            <div style="font-size: 0.9rem; color: var(--gray);">جاهزة للتسويق</div>
-                            <div style="font-size: 1.2rem; font-weight: bold; color: var(--warning);">${readyCalves}</div>
-                        </div>
-                        <div style="background: var(--light); padding: 10px; border-radius: 8px;">
-                            <div style="font-size: 0.9rem; color: var(--gray);">مباعة</div>
-                            <div style="font-size: 1.2rem; font-weight: bold; color: var(--info);">${soldCalves}</div>
-                        </div>
-                    </div>
-                    
-                    <h4 style="color: var(--primary); margin-bottom: 15px;">إحصائيات النمو</h4>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-                        <div style="background: var(--light); padding: 10px; border-radius: 8px;">
-                            <div style="font-size: 0.9rem; color: var(--gray);">متوسط الوزن</div>
-                            <div style="font-size: 1.2rem; font-weight: bold; color: var(--dark);">${avgWeight.toFixed(1)} كجم</div>
-                        </div>
-                        <div style="background: var(--light); padding: 10px; border-radius: 8px;">
-                            <div style="font-size: 0.9rem; color: var(--gray);">متوسط الزيادة الشهرية</div>
-                            <div style="font-size: 1.2rem; font-weight: bold; color: var(--success);">+${avgGain.toFixed(1)} كجم/شهر</div>
-                        </div>
-                    </div>
-                    
-                    <h4 style="color: var(--primary); margin-top: 20px; margin-bottom: 15px;">توزيع السلالات</h4>
-                    <div style="background: var(--light); padding: 15px; border-radius: 8px;">
-                        ${getBreedsDistribution()}
-                    </div>
-                </div>
-            `;
-        }
-        
-        // تحميل تقرير التكلفة
-        function loadCostReport() {
-            const container = document.getElementById('costReport');
-            
-            const totalInvestment = calves.reduce((sum, calf) => sum + (calf.price || 0), 0);
-            const activeInvestment = calves.filter(c => c.status === 'نشط')
-                .reduce((sum, calf) => sum + (calf.price || 0), 0);
-            
-            container.innerHTML = `
-                <div style="padding: 15px;">
-                    <h4 style="color: var(--primary); margin-bottom: 15px;">الاستثمار والتكلفة</h4>
-                    <div style="background: var(--light); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                            <span style="color: var(--gray);">إجمالي الاستثمار:</span>
-                            <span style="font-weight: bold; color: var(--dark);">${totalInvestment.toLocaleString()} ج.م</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                            <span style="color: var(--gray);">الاستثمار النشط:</span>
-                            <span style="font-weight: bold; color: var(--success);">${activeInvestment.toLocaleString()} ج.م</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between;">
-                            <span style="color: var(--gray);">قيمة العجول المباعة:</span>
-                            <span style="font-weight: bold; color: var(--info);">${calculateSoldValue().toLocaleString()} ج.م</span>
-                        </div>
-                    </div>
-                    
-                    <h4 style="color: var(--primary); margin-bottom: 15px;">تقدير العائد</h4>
-                    <div style="background: var(--light); padding: 15px; border-radius: 8px;">
-                        <div style="color: var(--gray); margin-bottom: 10px;">العجول الجاهزة للتسويق:</div>
-                        <div style="font-size: 1.1rem; font-weight: bold; color: var(--success);">
-                            ${calves.filter(c => c.status === 'جاهز للتسويق').length} عجل
-                        </div>
-                        <div style="color: var(--gray); margin-top: 15px;">قيمة تقديرية: ${estimateReadyValue().toLocaleString()} ج.م</div>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // تصدير الأوزان إلى CSV
-        function exportWeightsToCSV() {
-            let csv = 'رقم العجل,السلالة,التاريخ,الوزن (كجم),نوع العلف,الحالة الصحية,الملاحظات\n';
-            
-            weights.forEach(weight => {
-                const calf = calves.find(c => c.id === weight.calfId);
-                if (calf) {
-                    csv += `"${calf.number}","${calf.breed}","${weight.date}",${weight.weight},"${weight.feedType || ''}","${weight.health || ''}","${weight.notes || ''}"\n`;
-                }
-            });
-            
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `أوزان-المزرعة-${new Date().toISOString().split('T')[0]}.csv`;
-            link.click();
-            
-            showAlert('success', 'تم تصدير البيانات بنجاح');
-        }
-        
-        // تصدير جميع البيانات
-        function exportData() {
-            const data = {
-                calves: calves,
-                weights: weights,
-                settings: settings,
-                activities: activities,
-                exportDate: new Date().toISOString()
-            };
-            
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `نسخة-احتياطية-مزرعة-${new Date().toISOString().split('T')[0]}.json`;
-            link.click();
-            
-            showAlert('success', 'تم إنشاء نسخة احتياطية بنجاح');
-        }
-        
-        // استيراد البيانات
-        function importData() {
-            document.getElementById('importFile').click();
-        }
-        
-        // معالجة استيراد الملف
-        document.getElementById('importFile').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = JSON.parse(e.target.result);
-                    
-                    if (confirm('هل تريد استبدال جميع البيانات الحالية؟')) {
-                        if (data.calves) calves = data.calves;
-                        if (data.weights) weights = data.weights;
-                        if (data.settings) settings = data.settings;
-                        if (data.activities) activities = data.activities;
-                        
-                        saveCalves();
-                        saveWeights();
-                        saveSettings();
-                        saveActivities();
-                        
-                        loadDashboard();
-                        loadCalves();
-                        loadWeights();
-                        
-                        showAlert('success', 'تم استعادة البيانات بنجاح');
-                        addActivity('data_import', 'تم استيراد بيانات من نسخة احتياطية');
-                    }
-                } catch (error) {
-                    showAlert('error', 'خطأ في ملف الاستيراد');
-                }
-            };
-            reader.readAsText(file);
-        });
-        
-        // مسح جميع البيانات
-        function clearData() {
-            if (confirm('⚠️ تحذير: سيتم حذف جميع البيانات بشكل نهائي. هل أنت متأكد؟')) {
-                localStorage.clear();
-                calves = [];
-                weights = [];
-                settings = {};
-                activities = [];
-                
-                initializeSampleData();
-                
-                loadDashboard();
-                loadCalves();
-                loadWeights();
-                
-                showAlert('success', 'تم مسح جميع البيانات وإعادة التعيين');
-                addActivity('data_clear', 'تم مسح جميع البيانات وإعادة التعيين');
-            }
-        }
-        
-        // حفظ الإعدادات
-        function saveSettings() {
-            settings.farmName = document.getElementById('farmName').value;
-            settings.ownerName = document.getElementById('ownerName').value;
-            settings.phoneNumber = document.getElementById('phoneNumber').value;
-            settings.targetWeight = parseInt(document.getElementById('targetWeight').value);
-            settings.weightReminder = parseInt(document.getElementById('weightReminder').value);
-            
-            saveSettings();
-            showAlert('success', 'تم حفظ الإعدادات بنجاح');
-            addActivity('settings_update', 'تم تحديث إعدادات النظام');
-        }
-        
-        // عرض التنبيه
-        function showAlert(type, message) {
-            const alertTypes = {
-                'success': { title: 'نجاح', class: 'alert-success' },
-                'error': { title: 'خطأ', class: 'alert-danger' },
-                'warning': { title: 'تحذير', class: 'alert-warning' },
-                'info': { title: 'معلومة', class: 'alert-info' }
-            };
-            
-            const alertType = alertTypes[type] || alertTypes.info;
-            
-            document.getElementById('alertTitle').textContent = alertType.title;
-            document.getElementById('alertMessage').innerHTML = message;
-            
-            const modal = document.getElementById('alertModal');
-            modal.style.display = 'flex';
-        }
-        
-        // فتح النافذة المنبثقة
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'flex';
-        }
-        
-        // إغلاق النافذة المنبثقة
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-        
-        // تبديل التصفية
-        function toggleFilter(filterId) {
-            const filter = document.getElementById(filterId);
-            filter.style.display = filter.style.display === 'none' ? 'block' : 'none';
-        }
-        
-        // تطبيق التصفية
-        function applyFilters() {
-            loadCalves();
-        }
-        
-        // إعادة تعيين التصفية
-        function resetFilters() {
-            document.getElementById('filterBreed').value = '';
-            document.getElementById('filterStatus').value = '';
-            document.getElementById('filterSort').value = 'newest';
-            document.getElementById('searchCalves').value = '';
-            loadCalves();
-        }
-        
-        // وظائف مساعدة
-        function getLastWeight(calfId) {
-            const calfWeights = weights.filter(w => w.calfId === calfId);
-            if (calfWeights.length === 0) return null;
-            return calfWeights.sort((a, b) => new Date(b.date) - new Date(a.date))[0];
-        }
-        
-        function getFirstWeight(calfId) {
-            const calfWeights = weights.filter(w => w.calfId === calfId);
-            if (calfWeights.length === 0) return null;
-            return calfWeights.sort((a, b) => new Date(a.date) - new Date(b.date))[0];
-        }
-        
-        function calculateAverageWeight() {
-            const lastWeights = calves.map(calf => getLastWeight(calf.id)).filter(w => w !== null);
-            if (lastWeights.length === 0) return 0;
-            return lastWeights.reduce((sum, w) => sum + w.weight, 0) / lastWeights.length;
-        }
-        
-        function calculateAverageMonthlyGain() {
-            let totalGain = 0;
-            let count = 0;
-            
-            calves.forEach(calf => {
-                const gain = calculateMonthlyGain(calf.id);
-                if (gain > 0) {
-                    totalGain += gain;
-                    count++;
-                }
-            });
-            
-            return count > 0 ? totalGain / count : 0;
-        }
-        
-        function calculateMonthlyGain(calfId) {
-            const firstWeight = getFirstWeight(calfId);
-            const lastWeight = getLastWeight(calfId);
-            
-            if (!firstWeight || !lastWeight || firstWeight === lastWeight) return 0;
-            
-            const months = getMonthsBetween(firstWeight.date, lastWeight.date);
-            return months > 0 ? (lastWeight.weight - firstWeight.weight) / months : 0;
-        }
-        
-        function getMonthsBetween(date1, date2) {
-            const d1 = new Date(date1);
-            const d2 = new Date(date2);
-            return (d2.getFullYear() - d1.getFullYear()) * 12 + (d2.getMonth() - d1.getMonth());
-        }
-        
-        function calculateProgress(calfId) {
-            const lastWeight = getLastWeight(calfId);
-            const currentWeight = lastWeight ? lastWeight.weight : 0;
-            const targetWeight = settings.targetWeight || 350;
-            return Math.min(100, Math.round((currentWeight / targetWeight) * 100));
-        }
-        
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('ar-EG');
-        }
-        
-        function getStatusBadgeClass(status) {
-            switch(status) {
-                case 'نشط': return 'badge-success';
-                case 'جاهز للتسويق': return 'badge-warning';
-                case 'مباع': return 'badge-info';
-                case 'نافق': return 'badge-danger';
-                default: return 'badge-secondary';
-            }
-        }
-        
-        function getActivityIcon(type) {
-            switch(type) {
-                case 'calf_add': return 'plus-circle';
-                case 'calf_update': return 'edit';
-                case 'calf_delete': return 'trash';
-                case 'weight_add': return 'weight-scale';
-                case 'weight_update': return 'edit';
-                case 'weight_delete': return 'trash';
-                case 'status_change': return 'exchange-alt';
-                case 'data_import': return 'file-import';
-                case 'data_clear': return 'broom';
-                case 'settings_update': return 'cog';
-                default: return 'info-circle';
-            }
-        }
-        
-        function updateWeightStats() {
-            document.getElementById('totalMeasurements').textContent = weights.length;
-            
-            if (weights.length > 0) {
-                const lastWeight = weights.sort((a, b) => new Date(b.date) - new Date(a.date))[0];
-                document.getElementById('lastMeasurementDate').textContent = formatDate(lastWeight.date);
-            }
-            
-            // حساب أعلى زيادة شهرية
-            let maxGain = 0;
-            calves.forEach(calf => {
-                const gain = calculateMonthlyGain(calf.id);
-                if (gain > maxGain) maxGain = gain;
-            });
-            document.getElementById('maxGain').textContent = `${maxGain.toFixed(1)} كجم`;
-        }
-        
-        function getBreedsDistribution() {
-            const breeds = {};
-            calves.forEach(calf => {
-                breeds[calf.breed] = (breeds[calf.breed] || 0) + 1;
-            });
-            
-            let html = '';
-            Object.entries(breeds).forEach(([breed, count]) => {
-                const percentage = Math.round((count / calves.length) * 100);
-                html += `
-                    <div style="margin-bottom: 10px;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                            <span>${breed}</span>
-                            <span>${count} (${percentage}%)</span>
-                        </div>
-                        <div style="height: 8px; background: var(--light-gray); border-radius: 4px; overflow: hidden;">
-                            <div style="height: 100%; width: ${percentage}%; background: var(--primary);"></div>
-                        </div>
-                    </div>
-                `;
-            });
-            return html;
-        }
-        
-        function calculateSoldValue() {
-            return calves.filter(c => c.status === 'مباع')
-                .reduce((sum, calf) => sum + (calf.price || 0), 0);
-        }
-        
-        function estimateReadyValue() {
-            const readyCalves = calves.filter(c => c.status === 'جاهز للتسويق');
-            const avgPrice = calves.reduce((sum, calf) => sum + (calf.price || 0), 0) / calves.length;
-            return Math.round(readyCalves.length * (avgPrice || 15000));
-        }
-        
-        // بدء التطبيق
-        document.addEventListener('DOMContentLoaded', initApp);
-        
-        // إغلاق النوافذ بالضغط خارجها
-        window.addEventListener('click', (e) => {
-            if (e.target.classList.contains('modal')) {
-                e.target.style.display = 'none';
-            }
-        });
-        
-        // تحديث تاريخ اليوم كل دقيقة
-        setInterval(updateCurrentDate, 60000);
     </script>
 </body>
 </html>
