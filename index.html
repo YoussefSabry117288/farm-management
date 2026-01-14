@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة مزارع تسمين العجول المتكامل</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* (الجزء الخاص بالتنسيق CSS يبقى كما هو في ملفك الأصلي لضمان الشكل الجمالي) */
+        :root {
+            --primary: #2d6a4f; --primary-dark: #1b4332; --secondary: #40916c;
+            --accent: #ffb703; --accent-dark: #fb8500; --light: #f8f9fa;
+            --dark: #212529; --gray: #6c757d; --light-gray: #e9ecef;
+            --danger: #e63946; --warning: #ffc107; --success: #52b788;
+            --info: #4d908e; --radius: 12px; --transition: all 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background-color: #f1f7f4; color: var(--dark); line-height: 1.6; padding-bottom: 90px; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 15px; }
+        header { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 20px 15px; border-bottom: 4px solid var(--accent); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo-icon { width: 50px; height: 50px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 24px; }
+        .quick-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
+        .quick-action-btn { background: white; border-radius: var(--radius); padding: 15px 10px; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer; border: 2px solid transparent; transition: var(--transition); }
+        .quick-action-btn:hover { border-color: var(--primary); transform: translateY(-3px); }
+        .quick-action-btn i { font-size: 22px; margin-bottom: 8px; color: var(--primary); }
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0; }
+        .stat-card { background: white; border-radius: var(--radius); padding: 20px 15px; display: flex; align-items: center; gap: 15px; border-right: 5px solid var(--primary); }
+        .nav-tabs { display: flex; background: white; border-radius: var(--radius); margin: 20px 0; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .tab { flex: 1; text-align: center; padding: 16px 10px; font-weight: 700; color: var(--gray); cursor: pointer; transition: var(--transition); }
+        .tab.active { color: var(--primary); border-bottom: 4px solid var(--primary); background: rgba(45, 106, 79, 0.05); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: white; border-radius: var(--radius); width: 100%; max-width: 500px; padding: 30px; max-height: 90vh; overflow-y: auto; }
+        .btn { padding: 12px 20px; border: none; border-radius: var(--radius); font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-primary { background: var(--primary); color: white; }
+        .form-group { margin-bottom: 15px; }
+        .form-control { width: 100%; padding: 12px; border: 2px solid var(--light-gray); border-radius: var(--radius); }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 15px 0; box-shadow: 0 -4px 12px rgba(0,0,0,0.1); z-index: 1000; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--gray); text-decoration: none; font-size: 0.8rem; }
+        .nav-item.active { color: var(--primary); }
+        @media (max-width: 768px) { .stats-grid, .quick-actions { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-cow"></i></div>
+                    <div class="logo-text">
+                        <h1>نظام إدارة المزارع</h1>
+                        <p>إدارة متكاملة للعجول</p>
+                    </div>
+                </div>
+                <div id="currentDate"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="quick-actions">
+            <div class="quick-action-btn" onclick="openCalfModal()">
+                <i class="fas fa-plus-circle"></i><span>إضافة عجل</span>
+            </div>
+            <div class="quick-action-btn" onclick="openWeightModal()">
+                <i class="fas fa-weight-scale"></i><span>تسجيل وزن</span>
+            </div>
+            <div class="quick-action-btn" onclick="switchTab('reports')">
+                <i class="fas fa-chart-bar"></i><span>التقارير</span>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <div class="tab active" onclick="switchTab('dashboard')">الرئيسية</div>
+            <div class="tab" onclick="switchTab('calves')">العجول</div>
+            <div class="tab" onclick="switchTab('weights')">الأوزان</div>
+        </div>
+
+        <div id="dashboard" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <div class="stat-label">إجمالي العجول</div>
+                        <div class="stat-number" id="totalCalves">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <div class="stat-label">متوسط الوزن</div>
+                        <div class="stat-number" id="avgWeight">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="calves" class="tab-content">
+            <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+                <h2>قائمة العجول</h2>
+                <button class="btn btn-primary" onclick="openCalfModal()">+ إضافة عجل</button>
+            </div>
+            <div id="calvesListContainer"></div>
+        </div>
+        
+        <div id="weights" class="tab-content">
+            <h2>سجل الأوزان</h2>
+            <div id="weightsTableContainer"></div>
+        </div>
+    </div>
+
+    <div id="calfModal" class="modal">
+        <div class="modal-content">
+            <h3>إضافة عجل جديد</h3>
+            <form id="calfForm">
+                <div class="form-group">
+                    <label>رقم العجل</label>
+                    <input type="text" id="calfNumber" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>السلالة</label>
+                    <select id="calfBreed" class="form-control">
+                        <option value="بلدي">بلدي</option>
+                        <option value="هجين">هجين</option>
+                        <option value="فريزيان">فريزيان</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>الوزن الأولي</label>
+                    <input type="number" id="initialWeight" class="form-control" required>
+                </div>
+                <div style="display:flex; gap:10px; margin-top:20px;">
+                    <button type="submit" class="btn btn-primary">حفظ</button>
+                    <button type="button" class="btn" onclick="closeModal('calfModal')">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        [span_10](start_span)[span_11](start_span)// 1. إدارة البيانات[span_10](end_span)[span_11](end_span)
+        let calves = JSON.parse(localStorage.getItem('farm_calves')) || [];
+        let weights = JSON.parse(localStorage.getItem('farm_weights')) || [];
+
+        [span_12](start_span)[span_13](start_span)// 2. تشغيل عند التحميل[span_12](end_span)[span_13](end_span)
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDashboard();
+            renderCalves();
+            renderWeights();
+            document.getElementById('currentDate').innerText = new Date().toLocaleDateString('ar-EG');
+        });
+
+        [span_14](start_span)[span_15](start_span)// 3. وظائف التنقل[span_14](end_span)[span_15](end_span)
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event?.currentTarget?.classList?.add('active');
+        }
+
+        [span_16](start_span)[span_17](start_span)[span_18](start_span)// 4. وظائف النوافذ (Modals)[span_16](end_span)[span_17](end_span)[span_18](end_span)
+        function openCalfModal() { document.getElementById('calfModal').style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        [span_19](start_span)[span_20](start_span)// 5. حفظ البيانات[span_19](end_span)[span_20](end_span)
+        document.getElementById('calfForm').onsubmit = (e) => {
+            e.preventDefault();
+            const newCalf = {
+                id: Date.now(),
+                number: document.getElementById('calfNumber').value,
+                breed: document.getElementById('calfBreed').value,
+                initialWeight: parseFloat(document.getElementById('initialWeight').value)
+            };
+            calves.push(newCalf);
+            localStorage.setItem('farm_calves', JSON.stringify(calves));
+            closeModal('calfModal');
+            updateDashboard();
+            renderCalves();
+            alert('تم الحفظ بنجاح');
+        };
+
+        [span_21](start_span)[span_22](start_span)// 6. التحديث البصري[span_21](end_span)[span_22](end_span)
+        function updateDashboard() {
+            document.getElementById('totalCalves').innerText = calves.length;
+            const avg = calves.length ? (calves.reduce((s, c) => s + c.initialWeight, 0) / calves.length).toFixed(1) : 0;
+            document.getElementById('avgWeight').innerText = avg + ' كجم';
+        }
+
+        function renderCalves() {
+            const container = document.getElementById('calvesListContainer');
+            container.innerHTML = calves.map(c => `
+                <div style="background:white; padding:15px; border-radius:10px; margin-bottom:10px; border-right:5px solid var(--primary)">
+                    <strong>رقم: ${c.number}</strong> | سلالة: ${c.breed} | وزن: ${c.initialWeight} كجم
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
